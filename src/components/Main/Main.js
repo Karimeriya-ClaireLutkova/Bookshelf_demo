@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../Header/Header';
-import Books from '../Promo/Promo';
+import Books from '../Books/Books';
 
 function Main() {
 
