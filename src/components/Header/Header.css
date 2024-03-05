@@ -67,6 +67,8 @@
 }
 
 .header__main-illustration {
+  width: 965px;
+  height: 100%;
   position: absolute;
   right: 0;
   bottom: 0;
@@ -77,13 +79,26 @@
 }
 
 .header__picture-animated {
-  background-image: url("../../images/header_book.jpg");
-  top: 64px;
-  right: 0;
+  width: 219px;
+  height: 476px;
+  background-image: url("../../images/header_books.jpg");
+  top: 15px;
+  right: 15px;
   position: absolute;
   align-self: flex-end;
   background-repeat: no-repeat;
+  border-radius: 15px;
   z-index: 2;
+  opacity: 1;
+}
+
+.fadeinout {
+  animation: fadeinout 5s ease-in-out backwards;
+}
+
+@keyframes fadeinout {
+  0%, 75% { opacity: 0 }
+  50%, 100% { opacity: 1 }
 }
 
 @media (max-width: 800px) {
