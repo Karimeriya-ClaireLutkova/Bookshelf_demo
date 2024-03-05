@@ -1,12 +1,24 @@
-import './App.css';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Main from '../Main/Main';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-      </header>
-    </div>
-  );
+    <Routes>
+      <Route path="/" element={
+        <Main 
+
+        />
+      }>
+      </Route>
+      <Route path="*" element={
+        <NotFoundPage />
+      }>
+      </Route>
+    </Routes> 
+  )
 }
 
 export default App;
