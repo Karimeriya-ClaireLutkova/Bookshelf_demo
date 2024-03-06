@@ -66,14 +66,15 @@
 }
 
 .element__button_delete {
-  background-image: url("../../images/Delete_backet.svg");
-  width: 24px;
-  height: 24px;
+  background-image: url("../../images/book_delete.svg");
+  width: 30px;
+  height: 30px;
   background-repeat: no-repeat;
   border-radius: 50%;
   background-position: 50% 50%;
   margin: 0;
   opacity: 0;
+  transform: translate(240px, 0);
   cursor: pointer;
 }
 
