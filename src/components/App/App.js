@@ -8,11 +8,16 @@ import { currentUser, userId } from '../../utils/constants';
 function App() {
   const [userData, setUserData] = React.useState({ name: currentUser, id: userId, jwt: ''});
 
+  function handleAddBook() {
+    
+  }
+
   return (
     <>
       <Routes>
         <Route path="/" element={
           <Main currentUser={userData}
+                onAddBook={handleAddBook}
 
           />
         }>
@@ -23,6 +28,7 @@ function App() {
         </Route>
       </Routes>
       <Footer />
+      <AddBookPopup isOpen={isAddBookPopupOpen} onClose={closeAllPopups} onAddPlace={handleAddBookSubmit}/>
     </>
   )
 }

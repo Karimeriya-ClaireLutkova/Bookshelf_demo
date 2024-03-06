@@ -1,8 +1,8 @@
 import React from 'react';
 import './Addendum.css';
-import { headingAddendum, subtitleAddendum, paragraphAddendum1, paragraphAddendum2, paragraphAddendum3, textAddendum } from '../../utils/constants';
+import { headingAddendum, subtitleAddendum, paragraphAddendum1, paragraphAddendum2, paragraphAddendum3, textAddendum, buttonAddendum } from '../../utils/constants';
 
-function Addendum() {
+function Addendum({ onAddBook }) {
   return (
     <section id="content1" className="addendum" aria-label="две колонки">
       <h2 className="title title_addendum">{headingAddendum}</h2>
@@ -17,6 +17,7 @@ function Addendum() {
           <p className="paragraph paragraph_two-columns"><span class="two-columns__span-accent">{subtitleAddendum}</span>{textAddendum}</p>
         </div>
       </article>
+      <button type="button" onClick={onAddBook} className="button button_add_addendum" aria-label="Добавить книгу">{buttonAddendum}</button>
     </section>
   )
 }

@@ -3,14 +3,14 @@ import Header from '../Header/Header';
 import Books from '../Books/Books';
 import Addendum from '../Addendum/Addendum'
 
-function Main({ currentUser }) {
+function Main({ currentUser, onAddBook }) {
 
   return (
     <>
     <Header />
     <main>
       <Books currentUser={currentUser} />
-      <Addendum />
+      <Addendum onAddBook={onAddBook} />
     </main>
     </>
   )

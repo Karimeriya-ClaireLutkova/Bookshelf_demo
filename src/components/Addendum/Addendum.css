@@ -41,6 +41,24 @@
   margin: 0 115px 20px;
 }
 
+.button_add_addendum {
+  width: 78%;
+  min-height: 100px;
+  background-position: 50% 50%;
+  background-size: 22px;
+  font-size: 50px;
+  font-weight: 500;
+  line-height: 1.42;
+  border: 2px solid #FFF;
+  color: #2f80ed;
+  margin: 50px auto 0;
+  padding: 0;
+}
+
+.button_add_addendum:hover {
+  opacity: 0.8;
+}
+
 .two-columns {
   display: flex;
   margin: auto;
