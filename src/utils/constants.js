@@ -27,6 +27,9 @@ export const headingMain = "Все книги";
 export const content = "Хотели бы Вы помочь людям открыть миры за пределами Вселенной? ";
 export const contentAdditionally = "Читай вместе с Bookshelf - окунись в мир неизведанного..."
 export const details = "Узнать как стать героем";
+export const github = "Github Svetlana Lutkova";
+export const resume = "HH.ru Резюме Луткова"
+export const headingFooter = "Демонстрационный проект Bookshelf.";
 export const listBooks = [
 {
   name: 'Эффективная работа с унаследованным кодом',
