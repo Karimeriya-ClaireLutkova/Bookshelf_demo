@@ -11,7 +11,7 @@ function Books({ onMovieDelete, onChangeDescription, buttonInactive, currentUser
   }
 
   return (
-    <section id="content1" className="elements" aria-label="Список книг">
+    <section className="elements" aria-label="Список книг">
       <h2 className="elements__title">{headingMain}</h2>
       <p className="elements__subtitle">{contentAdditionally}</p>
       <div className="elements__container">

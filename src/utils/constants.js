@@ -26,11 +26,21 @@ export const headingHeader = "За пределами Вселенной";
 export const headingMain = "Все книги";
 export const content = "Хотели бы Вы помочь людям открыть миры за пределами Вселенной? ";
 export const contentAdditionally = "Читай вместе с Bookshelf - окунись в мир неизведанного..."
-export const details = "Узнать как стать героем";
+export const details = "Узнать подробнее ";
 export const github = "Github Svetlana Lutkova";
-export const resume = "HH.ru Резюме Луткова"
+export const resume = "HH.ru - посмотреть резюме"
 export const headingFooter = "Демонстрационный проект Bookshelf.";
 export const year = "2024";
+export const headingAddendum = "Новые книги"
+export const subtitleAddendum = "Как стать героем? ";
+export const paragraphAddendum1 = "В современном мире стать героем гораздо проще, чем Вам кажется.";
+export const paragraphAddendum2 = "Шаг в будущее";
+export const paragraphAddendum3 = "Сейчас информационные технологии развиваются очень быстро. Многие привычные вещи подвергаются цифровой трансформации. " +
+"Но нужно и людям сейчас крайне необходимо развиваться и не забывать про чтение. Именно оно делает нас умнее. " + 
+"И взрослые, и дети - все умеют пользоваться телефоном, много времени не выпускают его из рук. ";
+export const textAddendum = " В современном мире это гораздо проще. " + 
+"Читайте электронные книги, добавляйте новые, приобщайте друзей - Вы сделаете неоценимы вклад в будущее всего человечества.";
+
 export const listBooks = [
 {
   name: 'Эффективная работа с унаследованным кодом',

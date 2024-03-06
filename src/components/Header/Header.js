@@ -12,7 +12,7 @@ function Header() {
         <img className="header__logo logo logo_place_header" alt="Логотип Bookshelf" src={logoHeader} />
       </Link>
       <h1 className="header__title">{headingHeader}</h1>
-      <p className="header__subtitle">{content}<Link href="#content1" className="header__link header__link_transition">{details}&rarr;</Link></p>
+      <p className="header__subtitle">{content}<a href="#content1" className="header__link header__link_transition">{details}&rarr;</a></p>
       <div className="header__main-illustration">
       </div>
       <div className="header__picture-animated fadeinout">
