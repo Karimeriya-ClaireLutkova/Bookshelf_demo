@@ -1,41 +1,43 @@
 import React from 'react';
+import { placeNameAddBook, placeEditInfoBook } from '../utils/constants'
 
 export default function useFormValidator() {
   const [values, setValues] = React.useState({});
   const [errors, setErrors] = React.useState({});
   const [isValid, setIsValid] = React.useState(false);
   const [isValidNew, setValidNew] = React.useState(false);
-  const [isCurrentName, setCurrentName] = React.useState('');
-  const [isCurrentEmail, setCurrentEmail] = React.useState('');
+  const [currentName, setCurrentName] = React.useState('');
+  const [currentAuthor, setCurrentAuthor] = React.useState('');
+  const [currentImage, setCurrentImage] = React.useState('');
   const [isValidCurrent, setIsValidCurrent] = React.useState(false);
-  const [pathnameCurrent, setPathCurrent] = React.useState('');
+  const [placeNameCurrent, setPlaceNameCurrent] = React.useState('');
 
   React.useEffect(() => {
-    if(pathnameCurrent === '/sign-in' || pathnameCurrent === '/sign-up' || pathnameCurrent === '/profile' ) {
+    if(placeNameCurrent === placeNameAddBook || placeNameCurrent === placeEditInfoBook) {
       const checkFormErrors = (errors) => {
-        if(pathnameCurrent === '/sign-up') {
+        if(placeNameCurrent === placeNameAddBook) {
           if(errors.name !== '' && errors.name === undefined) {
             setIsValid(false);
-          } else if(errors.email !== '' || errors.email === undefined) {
-          } else if(errors.password !== '' || errors.password === undefined) {
+          } else if(errors.author !== '' || errors.author === undefined) {
+          } else if(errors.image !== '' || errors.image === undefined) {
             setIsValid(false);
-          } else if((errors.name === '') && (errors.email === '') && (errors.password === '')) {
+          } else if((errors.name === '') && (errors.author === '') && (errors.image === '')) {
             setIsValid(true);
           }
-        } else if(pathnameCurrent === '/sign-in') {
-          if(errors.email !== '' || errors.email === undefined) {
-            setIsValid(false);
-          } else if(errors.password !== '' || errors.password === undefined) {
-            setIsValid(false);
-          } else if((errors.email === '') && (errors.password === '')) {
-            setIsValid(true);
-          }
-        } else if(pathnameCurrent === '/profile') {
+        } else if(placeNameCurrent === placeEditInfoBook) {
           if(errors.name !== '' && errors.name !== undefined) {
             setIsValid(false);
-          } else if(errors.email !== '' && errors.email !== undefined) {
+          } else if(errors.author !== '' && errors.author !== undefined) {
             setIsValid(false);
-          } else if(((errors.name === '') && (errors.email === '')) || ((errors.name === undefined) && (errors.email === '')) || ((errors.email === undefined) && (errors.name === ''))) {
+          } else if(errors.image !== '' && errors.image !== undefined) {
+            setIsValid(false);
+          } else if(((errors.name === '') && (errors.author === '') && (errors.image === '')) ||
+                   ((errors.name === undefined) && (errors.author === '') && (errors.image === '')) ||
+                    ((errors.author === undefined) && (errors.name === '') && (errors.image === '')) || 
+                    ((errors.author === undefined) && (errors.name === undefined) && (errors.image === '')) ||
+                    ((errors.author === undefined) && (errors.name === '') && (errors.image === undefined)) ||
+                    ((errors.image === undefined) && (errors.name === '') && (errors.author === '')) ||
+                    ((errors.image === undefined) && (errors.name === undefined) && (errors.author === ''))) {
             setIsValid(true);
           } else if((errors.name === undefined) && (errors.email === undefined)) {
             setIsValid(false);
@@ -44,10 +46,10 @@ export default function useFormValidator() {
       }
       checkFormErrors(errors);
     }
-  }, [errors, pathnameCurrent]);
+  }, [errors, placeNameCurrent]);
 
   React.useEffect(() => {
-    if(pathnameCurrent === '/sign-in' || pathnameCurrent === '/sign-up' || pathnameCurrent === '/profile') {
+    if(placeNameCurrent === placeNameAddBook || placeNameCurrent === placeEditInfoBook) {
       const checkFormValid = (isValid, isValidNew) => {
         if(isValid === true && isValidNew === true) {
           setIsValidCurrent(true);
@@ -57,96 +59,94 @@ export default function useFormValidator() {
       };
       checkFormValid(isValid, isValidNew);
     }
-  }, [isValid, isValidNew, pathnameCurrent]);
+  }, [isValid, isValidNew, placeNameCurrent]);
 
   const handleChange = (data) => {
     setIsValid(false);
     const target = data.event.target;
     const name = target.name;
     const value = target.value;
-    if(data.currentUser !== undefined) {
-      setCurrentName(data.currentUser.name);
-      setCurrentEmail(data.currentUser.email);
+    if(data.currentBook !== undefined) {
+      setCurrentName(data.currentBook.name);
+      setCurrentAuthor(data.currentBook.email);
+      setCurrentImage(data.currentBook.image);
     }
     setValues({...values, [name]: value});
     setErrors({...errors, [name]: target.validationMessage });
-    if(data.pathname === undefined) {
+    if(data.placeName === undefined) {
       checkFieldsForm(name, value);
       setIsValid(true);
     } else {
-      setPathCurrent(data.pathname);
-      checkFieldsForm(name, value, data.pathname);
+      setPlaceNameCurrent(data.placeName);
+      checkFieldsForm(name, value, data.placeName);
     }
   };
 
-  function checkFieldsForm(name, value, pathname) {
+  function checkFieldsForm(name, value, placeName) {
     if (name === "name") {
       if (value.length === 0) {
-        setErrors({...errors, [name]: "Поле Имя не может быть пустым."});
+        setErrors({...errors, [name]: "Поле Название не может быть пустым."});
         setValidNew(false);
-      } else if (value.length === 1) {
-        setErrors({...errors, [name]: "Поле Имя не может содержать менее 2 символов."});
-        setValidNew(false);
-      } else if(value.length >= 2) {
-        if (!new RegExp(/^[a-zA-Zа-яёА-ЯЁ]+(?:[\s-][a-zA-Zа-яёА-ЯЁ]+)*$/).test(value)) {
-          setErrors({...errors, [name]: "Используйте только латиницу или кириллицу, дефис и один пробел."});
+      } else if (value.length > 0) {
+        if (value.length < 2) {
+          setErrors({...errors, [name]: "Поле Название не может быть меньше 2 символов."});
           setValidNew(false);
-        } else if (new RegExp(/^[a-zA-Zа-яёА-ЯЁ]+(?:[\s-][a-zA-Zа-яёА-ЯЁ]+)*$/).test(value)) {
-          if (isCurrentName === value) {
-            setErrors({...errors, [name]: "Введите имя, отличающееся от изначального."});
-            setValidNew(false);
-          } else if(isCurrentName !== value) {
+        } else if (value.length > 100) {
+          setErrors({...errors, [name]: "Поле Название не может быть больше 100 символов."});
+          setValidNew(false);
+        } else if (value.length > 2 && value.length <= 30) {
+          if (placeName === placeNameAddBook) {
             setValidNew(true);
+          } else if (placeNameCurrent === placeEditInfoBook) {
+            const currentNameNew = currentName.toLowerCase();
+            if (currentNameNew === value) {
+              setErrors({...errors, [name]: "Введите Название, отличающееся от изначального."});
+              setValidNew(false);
+            } else if (currentNameNew !== value) {
+              setValidNew(true);
+            }
           }
         }
       }
     }
-    if (name === "password") {
+    if (name === "author") {
       if (value.length === 0) {
-        setErrors({...errors, [name]: "Поле Пароль не может быть пустым."});
+        setErrors({...errors, [name]: "Поле Автор не может быть пустым."});
         setValidNew(false);
-      } else {
-        setValidNew(true);
+      } else if (value.length > 0) {
+        if (value.length < 2) {
+          setErrors({...errors, [name]: "Поле Автор не может быть меньше 2 символов."});
+          setValidNew(false);
+        } else if (value.length > 30) {
+          setErrors({...errors, [name]: "Поле Автор не может быть больше 30 символов."});
+          setValidNew(false);
+        } else if (value.length > 2 && value.length <= 30) {
+          if (placeName === placeNameAddBook) {
+            setValidNew(true);
+          } else if (placeNameCurrent === placeEditInfoBook) {
+            const currentAuthorNew = currentAuthor.toLowerCase();
+            if (currentAuthorNew === value) {
+              setErrors({...errors, [name]: "Введите Автора, отличающегося от изначального."});
+              setValidNew(false);
+            } else if (currentAuthorNew !== value) {
+              setValidNew(true);
+            }
+          }
+        }
       }
     }
-    if(name === "film") {
+    if(name === "image") {
       if (value.length === 0) {
-        setErrors({...errors, [name]: "Нужно ввести ключевое слово."});
+        setErrors({...errors, [name]: "Поле Картинка не может быть пустым."});
         setIsValidCurrent(false);
       } else if (value.length > 0) {
-        const textScreachCurrent = localStorage.getItem("textScreach");
-        const textScreachSavedCurrent = localStorage.getItem("textScreachSaved");
-        const valueNew = value.toLowerCase();
-        if(textScreachCurrent || textScreachSavedCurrent) {
-          if(textScreachCurrent) {
-            const textScreachNew = textScreachCurrent.toLowerCase();
-            if(pathname === "/movies" && valueNew === textScreachNew) {
-              setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."});
-              setIsValidCurrent(false);
-            } else {
-              setIsValidCurrent(true);
-            }
-          }
-          if(textScreachSavedCurrent) {
-            const textScreachSavedNew = textScreachSavedCurrent.toLowerCase();
-            if(pathname === "/saved-movies") {
-              if(valueNew === textScreachSavedNew) {
-                setErrors({...errors, [name]: "Нужно ввести ключевое слово, отличающееся от изначального."});
-                setIsValidCurrent(false);
-              } else {
-                setIsValidCurrent(true);
-              }
-            }
-          }
-        } else {
-          setIsValidCurrent(true);
-        }
+        setIsValidCurrent(true);
       }
     }
   }
 
   const resetForm = React.useCallback(
-    (newValues = {}, newErrors = {}, newIsValid = false, newValid = false, newIsValidCurrent = false, newErrorsListCurrent = false) => {
+    (newValues = {}, newErrors = {}, newIsValid = false, newValid = false, newIsValidCurrent = false) => {
       setValues(newValues);
       setErrors(newErrors);
       setIsValid(newIsValid);

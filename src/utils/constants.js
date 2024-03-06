@@ -1,23 +1,35 @@
-import compilers from '../images/Alfred_Axo__Compilers.jpg';
-import roadside from '../images/Arkadiy_Boris_Strygackie__Roadside_picnic.jpg';
-import allWorlds from '../images/Dennis_Tejlor__All_these_worlds.jpg';
-import hitchhikers from '../images/Duglas_Adams__Hitchhikers_guide_to_galaxy.jpg';
-import sod from '../images/Erik_Evans__SOD.jpg';
-import oop from '../images/Erix_Gamma__OOP_techniques.jpg';
-import duna from '../images/Frenk_Gerbert__Duna.jpg';
-import robot from '../images/Isaac_Asimov__I_robot.jpeg';
-import regular from '../images/Jeffri_Fridl__Regular_expressions.jpg';
-import lord from '../images/Jon_Tolkin__Lord_of_Rings.jpg';
-import extreme  from '../images/Kent_Back__Extreme_programming.jpg';
-import templates from '../images/Martin_Fayler__Templates.jpg';
-import effective from '../images/Martin_Fizers__Effective_work.jpg';
-import anafem from '../images/Nil_Stivenson__Anafem.jpeg';
-import chronicles from '../images/Rey_Bredberi__Martian_Chronicles.jpg';
-import moon from '../images/Robert Heinlein__Moon_harsh_mistress.jpg';
-import clean from '../images/Robert_Martin__Сlean_code.png';
-import perfect from '../images/Stiv_Makkonnell__Perfect_code.jpg';
-import confrontation from '../images/Stiven_King__Confrontation.jpg';
-import algorithms from '../images/Tomas_Korman__Algorithms.jpg';
+import compilers from '../images/images__books/Alfred_Axo__Compilers.jpg';
+import roadside from '../images/images__books/Arkadiy_Boris_Strygackie__Roadside_picnic.jpg';
+import allWorlds from '../images/images__books/Dennis_Tejlor__All_these_worlds.jpg';
+import hitchhikers from '../images/images__books/Duglas_Adams__Hitchhikers_guide_to_galaxy.jpg';
+import sod from '../images/images__books/Erik_Evans__SOD.jpg';
+import oop from '../images/images__books/Erix_Gamma__OOP_techniques.jpg';
+import duna from '../images/images__books/Frenk_Gerbert__Duna.jpg';
+import robot from '../images/images__books/Isaac_Asimov__I_robot.jpeg';
+import regular from '../images/images__books/Jeffri_Fridl__Regular_expressions.jpg';
+import lord from '../images/images__books/Jon_Tolkin__Lord_of_Rings.jpg';
+import extreme  from '../images/images__books/Kent_Back__Extreme_programming.jpg';
+import templates from '../images/images__books/Martin_Fayler__Templates.jpg';
+import effective from '../images/images__books/Martin_Fizers__Effective_work.jpg';
+import anafem from '../images/images__books/Nil_Stivenson__Anafem.jpeg';
+import chronicles from '../images/images__books/Rey_Bredberi__Martian_Chronicles.jpg';
+import moon from '../images/images__books/Robert Heinlein__Moon_harsh_mistress.jpg';
+import clean from '../images/images__books/Robert_Martin__Сlean_code.png';
+import perfect from '../images/images__books/Stiv_Makkonnell__Perfect_code.jpg';
+import confrontation from '../images/images__books/Stiven_King__Confrontation.jpg';
+import algorithms from '../images/images__books/Tomas_Korman__Algorithms.jpg';
+
+import flowers from '../images/images__books_new/floowers.jpg';
+import strawberry from '../images/images__books_new/strawberry.jpg';
+import cat from '../images/images__books_new/cat.jpg';
+import dog from '../images/images__books_new/dog.jpg';
+import rock from '../images/images__books_new/rock.jpg';
+import sea from '../images/images__books_new/sea.jpg';
+import plain from '../images/images__books_new/plain.jpg';
+import river from '../images/images__books_new/river.jpg';
+import duck from '../images/images__books_new/duck.jpg';
+import car from '../images/images__books_new/car.jpg';
+
 
 export const currentUser = "CurrentUser";
 export const userId = "154users";
@@ -39,8 +51,10 @@ export const paragraphAddendum3 = "Сейчас информационные т�
 "Но нужно и людям сейчас крайне необходимо развиваться и не забывать про чтение. Именно оно делает нас умнее. " + 
 "И взрослые, и дети - все умеют пользоваться телефоном, много времени не выпускают его из рук. ";
 export const textAddendum = " В современном мире это гораздо проще. " + 
-"Читайте электронные книги, добавляйте новые, приобщайте друзей - Вы сделаете неоценимы вклад в будущее всего человечества.";
+"Читайте электронные книги, добавляйте новые, приобщайте друзей - Вы сделаете неоценимый вклад в будущее всего человечества.";
 export const buttonAddendum = "Добавить новую книгу";
+export const placeNameAddBook = "addBook";
+export const placeEditInfoBook = 'placeNameAddBook';
 export const listBooks = [
 {
   name: 'Эффективная работа с унаследованным кодом',
@@ -183,3 +197,55 @@ export const listBooks = [
   id: 20,
 }
 ];
+export const listImages = [
+  {
+    name: "Цветы",
+    image: flowers,
+    id: 1,
+  },
+  {
+    name: "Клубника",
+    image: strawberry,
+    id: 2,
+  },
+  {
+    name: "Кот",
+    image: cat,
+    id: 3,
+  },
+  {
+    name: "Собака",
+    image: dog,
+    id: 4,
+  },
+  {
+    name: "Скала",
+    image: rock,
+    id: 5,
+  },
+  {
+    name: "Море",
+    image: sea,
+    id: 6,
+  },
+  {
+    name: "Степь",
+    image: plain,
+    id: 7,
+  },
+  {
+    name: "Река",
+    image: river,
+    id: 8,
+  },
+  {
+    name: "Утка",
+    image: duck,
+    id: 9,
+  },
+  {
+    name: "Машина",
+    image: car,
+    id: 10,
+  }
+  ];

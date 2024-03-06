@@ -4,12 +4,13 @@ import Main from '../Main/Main';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Footer from '../Footer/Footer';
 import AddBookPopup from '../AddBookPopup/AddBookPopup';
-import { currentUser, userId, listBooks } from '../../utils/constants';
+import { currentUser, userId, listBooks, listImages } from '../../utils/constants';
 
 function App() {
   const booksListStorage = localStorage.getItem("booksList");
-  const booksAll = JSON.parse(booksListStorage);
-  const [moviesAll, setMoviesAll] = React.useState(booksAll ? booksAll : []);
+  const booksAllStorage = JSON.parse(booksListStorage);
+  const imagesListStorage = localStorage.getItem("base64");
+  const [booksAll, setBooksAll] = React.useState(booksAllStorage ? booksAllStorage : []);
   const [userData, setUserData] = React.useState({ name: currentUser, id: userId, jwt: ''});
   const [isAddBookPopupOpen, setAddBookPopupOpen] = React.useState(false);
 
@@ -18,7 +19,11 @@ function App() {
     if(!booksListStorage) {
       localStorage.setItem("booksList", JSON.stringify(listBooks));
     }
-  }, [booksListStorage]);
+    const imagesListStorage = localStorage.getItem("base64");
+    if(!imagesListStorage) {
+      localStorage.setItem("base64", JSON.stringify(listImages));
+    }
+  }, [booksListStorage, imagesListStorage]);
 
   function handleAddBookPopup() {
     setAddBookPopupOpen(true);
