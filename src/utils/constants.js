@@ -30,6 +30,7 @@ export const details = "Узнать как стать героем";
 export const github = "Github Svetlana Lutkova";
 export const resume = "HH.ru Резюме Луткова"
 export const headingFooter = "Демонстрационный проект Bookshelf.";
+export const year = "2024";
 export const listBooks = [
 {
   name: 'Эффективная работа с унаследованным кодом',
