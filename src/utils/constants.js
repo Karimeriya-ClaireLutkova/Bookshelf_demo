@@ -21,7 +21,7 @@ import algorithms from '../images/Tomas_Korman__Algorithms.jpg';
 
 export const currentUser = "CurrentUser";
 export const userId = "154users";
-
+export const close = "Закрыть форму ";
 export const headingHeader = "За пределами Вселенной";
 export const headingMain = "Все книги";
 export const content = "Хотели бы Вы помочь людям открыть миры за пределами Вселенной? ";

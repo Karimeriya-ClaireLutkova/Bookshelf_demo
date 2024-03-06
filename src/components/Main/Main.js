@@ -3,14 +3,14 @@ import Header from '../Header/Header';
 import Books from '../Books/Books';
 import Addendum from '../Addendum/Addendum'
 
-function Main({ currentUser, onAddBook }) {
+function Main({ currentUser, onAddBookPopup }) {
 
   return (
     <>
     <Header />
     <main>
       <Books currentUser={currentUser} />
-      <Addendum onAddBook={onAddBook} />
+      <Addendum onAddBook={onAddBookPopup} />
     </main>
     </>
   )
