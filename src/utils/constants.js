@@ -22,9 +22,11 @@ import algorithms from '../images/Tomas_Korman__Algorithms.jpg';
 export const currentUser = "CurrentUser";
 export const userId = "154users";
 
-export const headingMajor = "За пределами Вселенной";
-export const content = "Хотели бы Вы оказаться где-нибудь далеко за пределами Вселенной? Читай вместе с Bookshelf - окунись в мир неизведанного... ";
-export const details = "Узнать ";
+export const headingHeader = "За пределами Вселенной";
+export const headingMain = "Все книги";
+export const content = "Хотели бы Вы помочь людям открыть миры за пределами Вселенной? ";
+export const contentAdditionally = "Читай вместе с Bookshelf - окунись в мир неизведанного..."
+export const details = "Узнать как стать героем";
 export const listBooks = [
 {
   name: 'Эффективная работа с унаследованным кодом',

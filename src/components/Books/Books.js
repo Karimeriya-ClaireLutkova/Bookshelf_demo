@@ -1,6 +1,6 @@
 import React from 'react';
 import BookCard from '../BooksCard/BooksCard';
-import { listBooks } from '../../utils/constants';
+import { headingMain, listBooks, contentAdditionally } from '../../utils/constants';
 import './Books.css';
 
 function Books({ onMovieDelete, onChangeDescription, buttonInactive, currentUser }) {
@@ -12,6 +12,8 @@ function Books({ onMovieDelete, onChangeDescription, buttonInactive, currentUser
 
   return (
     <section id="content1" className="elements" aria-label="Список книг">
+      <h2 className="elements__title">{headingMain}</h2>
+      <p className="elements__subtitle">{contentAdditionally}</p>
       <div className="elements__container">
         {listBooks.map((book, i) => (<BookCard key={book.id} book={book} onMovieDelete={onMovieDelete} currentUser={currentUser} />))}
       </div>
