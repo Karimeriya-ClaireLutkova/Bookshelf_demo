@@ -19,6 +19,9 @@ import perfect from '../images/Stiv_Makkonnell__Perfect_code.jpg';
 import confrontation from '../images/Stiven_King__Confrontation.jpg';
 import algorithms from '../images/Tomas_Korman__Algorithms.jpg';
 
+export const currentUser = "CurrentUser";
+export const userId = "154users";
+
 export const headingMajor = "За пределами Вселенной";
 export const content = "Хотели бы Вы оказаться где-нибудь далеко за пределами Вселенной? Читай вместе с Bookshelf - окунись в мир неизведанного... ";
 export const details = "Узнать ";

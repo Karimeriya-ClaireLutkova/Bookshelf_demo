@@ -1,9 +1,9 @@
 import React from 'react';
-import BookCard from '../BooksCard/';
+import BookCard from '../BooksCard/BooksCard';
 import { listBooks } from '../../utils/constants';
 import './Books.css';
 
-function Books({ onMovieLike, onMovieDelete, isErrorActive, onChangeDescription, buttonInactive }) {
+function Books({ onMovieDelete, onChangeDescription, buttonInactive, currentUser }) {
   const className = `elements-adding__button ${buttonInactive ? "elements-adding__button_type_inactive" : ""}`;
 
   function handleChangeDescription() {
@@ -13,7 +13,7 @@ function Books({ onMovieLike, onMovieDelete, isErrorActive, onChangeDescription,
   return (
     <section id="content1" className="elements" aria-label="Список книг">
       <div className="elements__container">
-        {listBooks.map((book, i) => (<BookCard key={book.id} book={book} onMovieLike={onMovieLike} onMovieDelete={onMovieDelete} />))}
+        {listBooks.map((book, i) => (<BookCard key={book.id} book={book} onMovieDelete={onMovieDelete} currentUser={currentUser} />))}
       </div>
       <div className="elements-adding">
         <button className={className} type="button" onClick={handleChangeDescription}>Ещё</button>
