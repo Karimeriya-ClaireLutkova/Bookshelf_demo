@@ -12,7 +12,9 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
   const [imageCurrent, setImageCurrent] = React.useState('');
   const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
   const [isOpenDropdown, setOpenDropdown] = React.useState(false);
+  const [isImageDropdown, setImageDropdown] = React.useState(false);
   const className = `popup popup__list-example ${isOpenDropdown? "popup_opened" : ""}`;
+  const element = document.querySelector("#book-image");
 
   React.useEffect(() => {
     if (isOpen) {
@@ -37,6 +39,8 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
 
   function handleClickDropdown() {
     setImage('');
+    setImageCurrent('');
+    setImageDropdown(false);
     setOpenDropdown(true);
   }
 
@@ -47,7 +51,18 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
   
   function handleDropdown() {
     setImage(imageCurrent);
+    setImageDropdown(true);
     handleCloseDropdown();
+    element.value = imageCurrent;
+    const event = new Event('change');
+    element.addEventListener(
+      'change',
+      (e) => {
+        handleChangeInput(e);
+      },
+      false,
+    );
+    element.dispatchEvent(event);
   }
 
   function handleCloseDropdown() {
@@ -94,8 +109,8 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
                   <div className="popup__list">
                     {imagesListStorage ? imagesNew.map((image, i) =>
                       <div>
-                        <label htmlFor={i + image.name}><img id={image.name} className="popup__image" src={image.image} alt={image.name} /></label>
-                        <input className="popup__input popup__input_type_image-dropdown" type="radio" id={i + image.name} value={image.image} name="image" onChange={handleChangeDropdown} />
+                        <label htmlFor={image.id}><img id={image.name} className="popup__image" src={image.image} alt={image.name} /></label>
+                        <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id} value={image.image} name="image" onChange={handleChangeDropdown} />
                       </div>
                     ) : ''}
                   </div>

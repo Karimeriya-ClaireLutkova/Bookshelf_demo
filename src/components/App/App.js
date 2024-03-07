@@ -35,15 +35,28 @@ function App() {
   
 
   function handleAddBook({name, author, image}) {
+    let arrLength = 0;
+    booksAll.forEach(function() {
+      arrLength++
+    });
+    console.log(arrLength);
     const bookNew = {
       name: name,
       author: author,
       image: image,
+      id: arrLength + 1,
       owner: userData.id,
     };
+    console.log(bookNew.id);
     setBooksAll([bookNew, ...booksAll]);
     localStorage.setItem("booksList", JSON.stringify([bookNew, ...booksAll]));
     closeAllPopups();
+  }
+
+  function handleBookDelete(book) {
+    const booksNewList = booksAll.filter((item) => item.id !== book.id);
+    setBooksAll(booksNewList);
+    localStorage.setItem("booksList", JSON.stringify(booksNewList));
   }
 
   function closeAllPopups() {
@@ -57,6 +70,7 @@ function App() {
         <Route path="/" element={
           <Main currentUser={userData}
                 onAddBookPopup={handleAddBookPopup}
+                onBookDelete={handleBookDelete}
                 booksAll={booksAll}
           />
         }>
