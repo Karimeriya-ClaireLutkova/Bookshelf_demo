@@ -19,6 +19,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
       setName('');
       setAuthor('');
       setImage('');
+      resetForm();
     };
   }, [isOpen]);
 
