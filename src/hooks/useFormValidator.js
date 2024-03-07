@@ -88,7 +88,7 @@ export default function useFormValidator() {
         setErrors({...errors, [name]: "Поле Название не может быть пустым."});
         setValidNew(false);
       } else if (value.length > 0) {
-        if (value.length < 2) {
+        if (value.length <= 2) {
           setErrors({...errors, [name]: "Поле Название не может быть меньше 2 символов."});
           setValidNew(false);
         } else if (value.length > 100) {
@@ -114,7 +114,7 @@ export default function useFormValidator() {
         setErrors({...errors, [name]: "Поле Автор не может быть пустым."});
         setValidNew(false);
       } else if (value.length > 0) {
-        if (value.length < 2) {
+        if (value.length <= 2) {
           setErrors({...errors, [name]: "Поле Автор не может быть меньше 2 символов."});
           setValidNew(false);
         } else if (value.length > 30) {
@@ -138,9 +138,9 @@ export default function useFormValidator() {
     if(name === "image") {
       if (value.length === 0) {
         setErrors({...errors, [name]: "Поле Картинка не может быть пустым."});
-        setIsValidCurrent(false);
+        setValidNew(false);
       } else if (value.length > 0) {
-        setIsValidCurrent(true);
+        setValidNew(true);
       }
     }
   }

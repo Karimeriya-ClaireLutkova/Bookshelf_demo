@@ -9,6 +9,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
   const [name, setName] = React.useState('');
   const [author, setAuthor] = React.useState('');
   const [image, setImage] = React.useState('');
+  const [imageCurrent, setImageCurrent] = React.useState('');
   const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
   const [isOpenDropdown, setOpenDropdown] = React.useState(false);
   const className = `popup popup__list-example ${isOpenDropdown? "popup_opened" : ""}`;
@@ -20,6 +21,8 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
       setImage('');
     };
   }, [isOpen]);
+
+  console.log(isValidCurrent);
 
   function handleChangeInput(evt) {
     handleChange({event: evt, placeName: placeNameAddBook});
@@ -34,15 +37,23 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
   }
 
   function handleClickDropdown() {
+    setImage('');
     setOpenDropdown(true);
   }
 
+  function handleChangeDropdown(evt) {
+    setImageCurrent(evt.target.value);
+    handleChange({event: evt, placeName: placeNameAddBook});
+  }
+  
   function handleDropdown() {
-
+    setImage(imageCurrent);
+    handleCloseDropdown();
   }
 
   function handleCloseDropdown() {
     setOpenDropdown(false);
+    setImageCurrent('');
   }
 
   function handleSubmit(evt) {
@@ -64,16 +75,19 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
                    textLoad={"Создание..."}>
       <div className="popup__field popup__field_card-new">
         <div className={`popup__data-input ${errors.name ? "popup__data-input_error" : ""}`}>
-          <input id="book-name-input" type="text" className="popup__input popup__input_type_book-name" name="name" value={name} onChange={handleChangeInput} placeholder="Название" required />
-          <span className="book-name-input-error popup__input-error"></span>
+          <input id="book-name-input" type="text" className="popup__input popup__input_type_card-name" name="name" value={name} onChange={handleChangeInput} placeholder="Название" required />
+          <span className={`book-name-input-error popup__input-error ${errors.name ? "popup__input-error_active" : ""}`}>{errors.name}</span>
         </div>
         <div className={`popup__data-input ${errors.author ? "popup__data-input_error" : ""}`}>
-          <input id="book-author" type="text" className="popup__input popup__input_type_book-author" name="author" value={author} onChange={handleChangeInput} placeholder="Автор" required />
-          <span className="book-author-error popup__input-error"></span>
+          <input id="book-author" type="text" className="popup__input popup__input_type_card-name" name="author" value={author} onChange={handleChangeInput} placeholder="Автор" required />
+          <span className={`book-author-error popup__input-error ${errors.author ? "popup__input-error_active" : ""}`}>{errors.author}</span>
         </div>
-        <div className={`popup__data-input ${errors.author ? "popup__data-input_error" : ""}`}>
-          <input id="book-image" type="fail" className="popup__input popup__input_type_book-image" name="image" value={image} onChange={handleChangeInput} list="exampleList" placeholder="Добавить картинку" required />
-          <button type="button" className="popup__button popup__button_card-new popup__button_card-new_show" onClick={handleClickDropdown}></button>
+        <div className={`popup__data-input ${errors.image ? "popup__data-input_error" : ""}`}>
+          <input id="book-image" type="text" className="popup__input popup__input_type_card-name" name="image" value={image} onChange={handleChangeInput} placeholder="Добавить картинку" required />
+          <div className="popup-span-group">
+            <span className={`book-image-error popup__input-error ${errors.image ? "popup__input-error_active" : ""}`}>{errors.image}</span>
+            <button type="button" className="popup__button popup__button_card-new popup__button_card-new_show" onClick={handleClickDropdown}></button>
+          </div>
             {isOpenDropdown ?
               (<div className={className}>
                 <div className="popup__container popup__container_image-dropdown">
@@ -81,8 +95,8 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
                   <div className="popup__list">
                     {imagesListStorage ? imagesNew.map((image, i) =>
                       <div>
-                        <label htmlFor={i + image.name}><img id={image.id} className="popup__image" src={image.image} alt={image.name} /></label>
-                        <input className="popup__input popup__input_type_image-dropdown" type="radio" id={i + image.name} value={image.name} name="line-style" />
+                        <label htmlFor={i + image.name}><img id={image.name} className="popup__image" src={image.image} alt={image.name} /></label>
+                        <input className="popup__input popup__input_type_image-dropdown" type="radio" id={i + image.name} value={image.image} name="image" onChange={handleChangeDropdown} />
                       </div>
                     ) : ''}
                   </div>
@@ -91,7 +105,6 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
               </div>
               ) : ''
             }
-          <span className="book-image-error popup__input-error"></span>
         </div>
       </div>
     </PopupWithForm>
