@@ -23,8 +23,6 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
     };
   }, [isOpen]);
 
-  console.log(isValidCurrent);
-
   function handleChangeInput(evt) {
     handleChange({event: evt, placeName: placeNameAddBook});
     if(evt.target.name === 'name') {

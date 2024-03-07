@@ -82,6 +82,7 @@
   width: 219px;
   height: 476px;
   background-image: url("../../images/header_books.jpg");
+  background-size: 100%;
   top: 15px;
   right: 15px;
   position: absolute;

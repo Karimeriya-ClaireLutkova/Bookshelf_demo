@@ -20,7 +20,7 @@ function Addendum({ onAddBook }) {
           <p className="paragraph paragraph_two-columns"><span className="two-columns__span-accent">{subtitleAddendum}</span>{textAddendum}</p>
         </div>
       </article>
-      <button type="button" onClick={handleAddBookPopup} className="button button_add_addendum" aria-label="Добавить книгу">{buttonAddendum}</button>
+      <button type="button" onClick={handleAddBookPopup} className="button button_add_addendum">{buttonAddendum}</button>
     </section>
   )
 }

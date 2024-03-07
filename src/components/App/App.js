@@ -15,14 +15,18 @@ function App() {
   const [isAddBookPopupOpen, setAddBookPopupOpen] = React.useState(false);
 
   React.useEffect(() => {
-    const booksListStorage = localStorage.getItem("booksList");
-    if(!booksListStorage) {
-      localStorage.setItem("booksList", JSON.stringify(listBooks));
+    const booksCheck = () => {
+      const booksListStorage = localStorage.getItem("booksList");
+      if(!booksListStorage) {
+        localStorage.setItem("booksList", JSON.stringify(listBooks));
+        setBooksAll(listBooks);
+      }
+      const imagesListStorage = localStorage.getItem("base64");
+      if(!imagesListStorage) {
+        localStorage.setItem("base64", JSON.stringify(listImages));
+      }
     }
-    const imagesListStorage = localStorage.getItem("base64");
-    if(!imagesListStorage) {
-      localStorage.setItem("base64", JSON.stringify(listImages));
-    }
+    booksCheck();
   }, [booksListStorage, imagesListStorage]);
 
   function handleAddBookPopup() {
@@ -30,8 +34,16 @@ function App() {
   }
   
 
-  function handleAddBook() {
-
+  function handleAddBook({name, author, image}) {
+    const bookNew = {
+      name: name,
+      author: author,
+      image: image,
+      owner: userData.id,
+    };
+    setBooksAll([bookNew, ...booksAll]);
+    localStorage.setItem("booksList", JSON.stringify([bookNew, ...booksAll]));
+    closeAllPopups();
   }
 
   function closeAllPopups() {
@@ -45,6 +57,7 @@ function App() {
         <Route path="/" element={
           <Main currentUser={userData}
                 onAddBookPopup={handleAddBookPopup}
+                booksAll={booksAll}
           />
         }>
         </Route>
