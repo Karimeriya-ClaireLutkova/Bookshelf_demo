@@ -1,5 +1,5 @@
 import React from 'react';
-import { placeNameAddBook, close } from '../../utils/constants'
+import { placeNameAddBook, placeNameAddImageDropdown, close } from '../../utils/constants'
 import useFormValidator from '../../hooks/useFormValidator';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
@@ -44,7 +44,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
 
   function handleChangeDropdown(evt) {
     setImageCurrent(evt.target.value);
-    handleChange({event: evt, placeName: placeNameAddBook});
+    handleChange({event: evt, placeName: placeNameAddImageDropdown});
   }
   
   function handleDropdown() {
@@ -84,7 +84,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
           <span className={`book-author-error popup__input-error ${errors.author ? "popup__input-error_active" : ""}`}>{errors.author}</span>
         </div>
         <div className={`popup__data-input ${errors.image ? "popup__data-input_error" : ""}`}>
-          <input id="book-image" type="text" className="popup__input popup__input_type_card-name" name="image" value={image} onChange={handleChangeInput} placeholder="Добавить картинку" required />
+          <input id="book-image" type="url" className="popup__input popup__input_type_card-name" name="image" value={image} onChange={handleChangeInput} placeholder="Добавить картинку" required />
           <div className="popup-span-group">
             <span className={`book-image-error popup__input-error ${errors.image ? "popup__input-error_active" : ""}`}>{errors.image}</span>
             <button type="button" className="popup__button popup__button_card-new popup__button_card-new_show" onClick={handleClickDropdown}></button>

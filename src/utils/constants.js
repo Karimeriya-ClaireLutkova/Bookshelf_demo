@@ -53,6 +53,7 @@ export const textAddendum = " В современном мире это гора
 "Читайте электронные книги, добавляйте новые, приобщайте друзей - Вы сделаете неоценимый вклад в будущее всего человечества.";
 export const buttonAddendum = "Добавить новую книгу";
 export const placeNameAddBook = "addBook";
+export const placeNameAddImageDropdown = "dropdownAddBook";
 export const placeEditInfoBook = 'placeNameAddBook';
 export const listBooks = [
 {

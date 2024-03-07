@@ -1,5 +1,5 @@
 import React from 'react';
-import { placeNameAddBook, placeEditInfoBook } from '../utils/constants'
+import { placeNameAddBook, placeEditInfoBook, placeNameAddImageDropdown } from '../utils/constants'
 
 export default function useFormValidator() {
   const [values, setValues] = React.useState({});
@@ -97,7 +97,7 @@ export default function useFormValidator() {
         } else if (value.length > 2 && value.length <= 30) {
           if (placeName === placeNameAddBook) {
             setValidNew(true);
-          } else if (placeNameCurrent === placeEditInfoBook) {
+          } else if (placeName === placeEditInfoBook) {
             const currentNameNew = currentName.toLowerCase();
             if (currentNameNew === value) {
               setErrors({...errors, [name]: "Введите Название, отличающееся от изначального."});
@@ -140,7 +140,16 @@ export default function useFormValidator() {
         setErrors({...errors, [name]: "Поле Картинка не может быть пустым."});
         setValidNew(false);
       } else if (value.length > 0) {
-        setValidNew(true);
+        if (placeName === placeNameAddImageDropdown) {
+          setValidNew(true);
+        } else {
+          if (!new RegExp(/^https?:\/\/(www\.)?([0-9a-zA-Z.-]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.?(?:jpe?g|gif|png|bmp|webp)?$/).test(value)) {
+            setErrors({...errors, [name]: "Неверный формат ссылки или изображения."});
+            setValidNew(false);
+          } else if (new RegExp(/^https?:\/\/(www\.)?([0-9a-zA-Z.-]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.?(?:jpe?g|gif|png|bmp|webp)?$/).test(value)) {
+            setValidNew(true);
+          }
+        }
       }
     }
   }
