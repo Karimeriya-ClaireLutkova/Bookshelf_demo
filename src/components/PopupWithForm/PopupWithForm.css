@@ -161,7 +161,7 @@
   border-bottom: 1px solid #000;
   color: #000;
   background-color: #FFF;
-  padding: 0 0 10px;
+  padding: 10px;
   box-sizing: border-box;
   margin: 0;
   outline: none;
@@ -289,8 +289,8 @@
 }
 
 .popup__input_type_image-dropdown {
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
 }
 
 .popup__button_image-dropdown {
@@ -306,6 +306,9 @@
   background-color: #4285F4;
 }
 
+.popup__button_close_image-dropdown {
+  transform: translate(75px, -70px);
+}
 
 .popup__container_card-new {
   position: relative;
@@ -361,18 +364,20 @@
   height: 16px;
   font-size: 13px;
   line-height: 1.23;
-  background-color: #202020;
+  background-color: white;
   justify-content: center;
   border-radius: 0;
   margin: 188px auto 16px;
 }
 
-.popup__button_show_card-new {
-  width: 12px;
-  height: 12px;
-  background-image: url("../../images/close-icon.svg");
+.popup__button_card-new_show {
+  width: 22px;
+  height: 22px;
+  background-image: url("../../images/drop-down-menu.svg");
   margin: 0;
-  transform: translate(-5px, -20px);
+  background-position: 50% 50%;
+  background-size: 100%;  
+  transform: translate(-5px, -30px);
 }
 
 .popup__input_error {

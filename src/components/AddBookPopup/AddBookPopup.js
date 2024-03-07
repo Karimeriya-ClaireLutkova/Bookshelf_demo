@@ -1,5 +1,5 @@
 import React from 'react';
-import { placeNameAddBook } from '../../utils/constants'
+import { placeNameAddBook, close } from '../../utils/constants'
 import useFormValidator from '../../hooks/useFormValidator';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
@@ -11,7 +11,6 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
   const [image, setImage] = React.useState('');
   const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
   const [isOpenDropdown, setOpenDropdown] = React.useState(false);
-  const [isOpenCurrent, setOpenCurrent] = React.useState(false);
   const className = `popup popup__list-example ${isOpenDropdown? "popup_opened" : ""}`;
 
   React.useEffect(() => {
@@ -19,7 +18,6 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
       setName('');
       setAuthor('');
       setImage('');
-      setOpenCurrent(true);
     };
   }, [isOpen]);
 
@@ -43,6 +41,10 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
 
   }
 
+  function handleCloseDropdown() {
+    setOpenDropdown(false);
+  }
+
   function handleSubmit(evt) {
     evt.preventDefault();
     onAddBook({name, author, image});
@@ -53,7 +55,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
     <PopupWithForm id="1" 
                    name="card-new" 
                    title="Новая книга"
-                   isOpen={isOpenCurrent}
+                   isOpen={isOpen}
                    onClose={onClose}
                    onSubmit ={handleSubmit}
                    buttonText={"Создать"}
@@ -71,15 +73,16 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
         </div>
         <div className={`popup__data-input ${errors.author ? "popup__data-input_error" : ""}`}>
           <input id="book-image" type="fail" className="popup__input popup__input_type_book-image" name="image" value={image} onChange={handleChangeInput} list="exampleList" placeholder="Добавить картинку" required />
-          <button type="button" className="popup__button popup__button_card-new popup__button_show_card-new" onClick={handleClickDropdown}></button>
+          <button type="button" className="popup__button popup__button_card-new popup__button_card-new_show" onClick={handleClickDropdown}></button>
             {isOpenDropdown ?
-              (<div id="image-dropdown" className={className}>
+              (<div className={className}>
                 <div className="popup__container popup__container_image-dropdown">
+                <button id="image-dropdown" type="button" onClick={handleCloseDropdown} className="popup__button popup__button_close popup__button_close_image-dropdown" aria-label={close + "image-dropdown"} />
                   <div className="popup__list">
-                    {imagesListStorage ? imagesNew.map(image =>
+                    {imagesListStorage ? imagesNew.map((image, i) =>
                       <div>
-                        <label for={image.id}><img className="popup__image" src={image.image} alt={image.name} /></label>
-                        <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id} name="line-style" value={image.name} checked="checked" />            
+                        <label htmlFor={i + image.name}><img id={image.id} className="popup__image" src={image.image} alt={image.name} /></label>
+                        <input className="popup__input popup__input_type_image-dropdown" type="radio" id={i + image.name} value={image.name} name="line-style" />
                       </div>
                     ) : ''}
                   </div>
