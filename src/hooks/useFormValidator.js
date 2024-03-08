@@ -13,9 +13,9 @@ export default function useFormValidator() {
   const [placeNameCurrent, setPlaceNameCurrent] = React.useState('');
 
   React.useEffect(() => {
-    if(placeNameCurrent === placeNameAddBook || placeNameCurrent === placeEditInfoBook) {
+    if(placeNameCurrent === placeNameAddBook || placeNameCurrent === placeEditInfoBook || placeNameCurrent === placeNameAddImageDropdown) {
       const checkFormErrors = (errors) => {
-        if(placeNameCurrent === placeNameAddBook) {
+        if(placeNameCurrent === placeNameAddBook || placeNameAddImageDropdown) {
           if(errors.name !== '' && errors.name === undefined) {
             setIsValid(false);
           } else if(errors.author !== '' || errors.author === undefined) {
@@ -49,7 +49,7 @@ export default function useFormValidator() {
   }, [errors, placeNameCurrent]);
 
   React.useEffect(() => {
-    if(placeNameCurrent === placeNameAddBook || placeNameCurrent === placeEditInfoBook) {
+    if(placeNameCurrent === placeNameAddBook || placeNameCurrent === placeEditInfoBook || placeNameCurrent === placeNameAddImageDropdown) {
       const checkFormValid = (isValid, isValidNew) => {
         if(isValid === true && isValidNew === true) {
           setIsValidCurrent(true);

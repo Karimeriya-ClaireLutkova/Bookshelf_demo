@@ -12,10 +12,10 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
   const [imageCurrent, setImageCurrent] = React.useState('');
   const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
   const [isOpenDropdown, setOpenDropdown] = React.useState(false);
-  const [isImageDropdown, setImageDropdown] = React.useState(false);
   const className = `popup popup__list-example ${isOpenDropdown? "popup_opened" : ""}`;
   const element = document.querySelector("#book-image");
 
+  console.log(isValidCurrent, errors);
   React.useEffect(() => {
     if (isOpen) {
       setName('');
@@ -25,11 +25,8 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
     };
   }, [isOpen]);
 
-  function handleChangeInput(evt) {
-    console.log(isImageDropdown);
-    if(isImageDropdown) {
-      console.log(evt);
-    }
+  function handleChangeInput(evt, isImageDropdown) {
+    console.log(isImageDropdown, evt);
     handleChange({event: evt, placeName: isImageDropdown ? placeNameAddImageDropdown : placeNameAddBook});
     if(evt.target.name === 'name') {
       setName(evt.target.value);
@@ -43,40 +40,35 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
   function handleClickDropdown() {
     setImage('');
     setImageCurrent('');
-    setImageDropdown(false);
     setOpenDropdown(true);
   }
 
   function handleChangeDropdown(evt) {
     setImageCurrent(evt.target.value);
-    setImageDropdown(true);
     handleChange({event: evt, placeName: placeNameAddImageDropdown});
-  }
-
-  const event = new Event('change');
-    element.addEventListener(
-      'change', (e) => handleChangeListener(e), false,
-    );
-    
-  function handleChangeListener(event) {
-    handleChangeInput(event);
   }
   
   function handleDropdown() {
     setImage(imageCurrent);
     handleCloseDropdown();
-    element.value = imageCurrent;
-    element.dispatchEvent(event);
   }
 
   function handleCloseDropdown() {
     setOpenDropdown(false);
+    const isImageDropdown = true;
+    const event = new CustomEvent('change', {
+      cancelable: true});
+    let e = {target: {name: element.name, value: imageCurrent, validationMessage: ""}}
+    element.addEventListener(
+      'change', handleChangeInput(e, isImageDropdown), false,
+    );
+    element.dispatchEvent(event);
     setImageCurrent('');
-    setImageDropdown(false);
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    console.log({name, author, image});
     onAddBook({name, author, image});
     resetForm();
   }
@@ -111,11 +103,11 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
               (<div className={className}>
                 <div className="popup__container popup__container_image-dropdown">
                 <button type="button" onClick={handleCloseDropdown} className="popup__button popup__button_close popup__button_close_image-dropdown" aria-label={close + "image-dropdown"} />
-                  <div className="popup__list">
+                  <div id="image-dropdown-list" className="popup__list">
                     {imagesListStorage ? imagesNew.map((image, i) =>
                       <div id={image.name + i}>
-                        <label htmlFor={image.id}><img id={image.name} className="popup__image" src={image.image} alt={image.name} /></label>
-                        <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id} value={image.image} name="image" onChange={handleChangeDropdown} />
+                        <label htmlFor={image.id + "image"}><img id={image.name} className="popup__image" src={image.image} alt={image.name} /></label>
+                        <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "image"} value={image.image} name="image" onChange={handleChangeDropdown} />
                       </div>
                     ) : ''}
                   </div>
