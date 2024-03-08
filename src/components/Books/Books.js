@@ -20,7 +20,7 @@ function Books({ booksAll, onBookDelete, onChangeDescription, buttonInactive, cu
       <h2 className="elements__title">{headingMain}</h2>
       <p className="elements__subtitle">{contentAdditionally}</p>
       <div className="elements__container">
-        {booksList.map((book, i) => (<BookCard key={book.id} book={book} onMovieDelete={onBookDelete} currentUser={currentUser} />))}
+        {booksList.map((book, i) => (<BookCard key={book.id} book={book} onBookDelete={onBookDelete} currentUser={currentUser} />))}
       </div>
       <div className="elements-adding">
         <button className={className} type="button" onClick={handleChangeDescription}>Ещё</button>
