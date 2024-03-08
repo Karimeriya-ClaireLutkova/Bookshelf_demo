@@ -26,7 +26,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
   }, [isOpen]);
 
   function handleChangeInput(evt) {
-    handleChange({event: evt, placeName: placeNameAddBook});
+    handleChange({event: evt, placeName: isImageDropdown ? placeNameAddImageDropdown : placeNameAddBook});
     if(evt.target.name === 'name') {
       setName(evt.target.value);
     } else if(evt.target.name === 'author') {
@@ -42,6 +42,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
     setImageCurrent('');
     setImageDropdown(false);
     setOpenDropdown(true);
+    setImageDropdown(true);
   }
 
   function handleChangeDropdown(evt) {
@@ -51,7 +52,6 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
   
   function handleDropdown() {
     setImage(imageCurrent);
-    setImageDropdown(true);
     handleCloseDropdown();
     element.value = imageCurrent;
     const event = new Event('change');
@@ -68,6 +68,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
   function handleCloseDropdown() {
     setOpenDropdown(false);
     setImageCurrent('');
+    setImageDropdown(false);
   }
 
   function handleSubmit(evt) {
@@ -97,7 +98,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
           <span className={`book-author-error popup__input-error ${errors.author ? "popup__input-error_active" : ""}`}>{errors.author}</span>
         </div>
         <div className={`popup__data-input ${errors.image ? "popup__data-input_error" : ""}`}>
-          <input id="book-image" type="url" className="popup__input popup__input_type_card-name" name="image" value={image} onChange={handleChangeInput} placeholder="Добавить картинку" required />
+          <input id="book-image" type="text" className="popup__input popup__input_type_card-name" name="image" value={image} onChange={handleChangeInput} placeholder="Добавить картинку" required />
           <div className="popup-span-group">
             <span className={`book-image-error popup__input-error ${errors.image ? "popup__input-error_active" : ""}`}>{errors.image}</span>
             <button type="button" className="popup__button popup__button_card-new popup__button_card-new_show" onClick={handleClickDropdown}></button>
