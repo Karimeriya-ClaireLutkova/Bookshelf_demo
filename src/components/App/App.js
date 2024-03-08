@@ -10,8 +10,6 @@ function App() {
   const booksListStorage = localStorage.getItem("booksList");
   const booksAllStorage = JSON.parse(booksListStorage);
   const imagesListStorage = localStorage.getItem("base64");
-  document.cookie = "loginstatus=loggedin";
-  localStorage.setItem("loggedIn", true);
   const [booksAll, setBooksAll] = React.useState(booksAllStorage ? booksAllStorage : []);
   const [isAddBookPopupOpen, setAddBookPopupOpen] = React.useState(false);
   const [isNotBooksInfo, setNotBooksInfo] = React.useState(false);
@@ -22,6 +20,11 @@ function App() {
       if(!booksListStorage) {
         localStorage.setItem("booksList", JSON.stringify(listBooks));
         setBooksAll(listBooks);
+      } else {
+        const arrLength = counterBooksLength();
+        if(arrLength === 0) {
+          setNotBooksInfo(true);
+        }
       }
       const imagesListStorage = localStorage.getItem("base64");
       if(!imagesListStorage) {
@@ -30,19 +33,6 @@ function App() {
     }
     booksCheck();
   }, [booksListStorage, imagesListStorage]);
-
-  React.useEffect(() => {
-    const handleUserLoggedIn = () => {
-      if(!document.cookie.split(";").indexOf("loginstatus=loggedin")) {  
-        localStorage.removeItem("loggedIn");
-      }
-      let session = localStorage.getItem("loggedIn");
-      if (session === null) {
-        closeAllPopups();
-      }
-    }      
-    handleUserLoggedIn();
-  }, []);
 
   function handleAddBookPopup() {
     setAddBookPopupOpen(true);
@@ -84,9 +74,6 @@ function App() {
 
   function closeAllPopups() {
     setAddBookPopupOpen(false);
-    localStorage.removeItem("booksList");
-    localStorage.removeItem("booksList");
-    localStorage.removeItem("base64");
     /*setEditBookPopupOpen(false);*/
   }
 

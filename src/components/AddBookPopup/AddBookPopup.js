@@ -105,9 +105,9 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
                 <button type="button" onClick={handleCloseDropdown} className="popup__button popup__button_close popup__button_close_image-dropdown" aria-label={close + "image-dropdown"} />
                   <div id="image-dropdown-list" className="popup__list">
                     {imagesListStorage ? imagesNew.map((image, i) =>
-                      <div id={image.name + i}>
-                        <label htmlFor={image.id + "image"}><img id={image.name} className="popup__image" src={image.image} alt={image.name} /></label>
-                        <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "image"} value={image.image} name="image" onChange={handleChangeDropdown} />
+                      <div>
+                        <label htmlFor={image.id + "-image"}><img id={image.id} className="popup__image" src={image.image} alt={image.name} /></label>
+                        <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "-image"} value={image.image} name="image" onChange={handleChangeDropdown} />
                       </div>
                     ) : ''}
                   </div>

@@ -179,51 +179,51 @@ export const listImages = [
   {
     name: "Цветы",
     image: flowers,
-    id: 1,
+    id: "flowers1",
   },
   {
     name: "Клубника",
     image: strawberry,
-    id: 2,
+    id: "strawberry2",
   },
   {
     name: "Кот",
     image: cat,
-    id: 3,
+    id: "cat3",
   },
   {
     name: "Собака",
     image: dog,
-    id: 4,
+    id: "dog4",
   },
   {
     name: "Скала",
     image: rock,
-    id: 5,
+    id: "rock5",
   },
   {
     name: "Море",
     image: sea,
-    id: 6,
+    id: "sea6",
   },
   {
     name: "Степь",
     image: plain,
-    id: 7,
+    id: "plain7",
   },
   {
     name: "Река",
     image: river,
-    id: 8,
+    id: "river8",
   },
   {
     name: "Утка",
     image: duck,
-    id: 9,
+    id: "duck9",
   },
   {
     name: "Машина",
     image: car,
-    id: 10,
+    id: "car10",
   }
   ];

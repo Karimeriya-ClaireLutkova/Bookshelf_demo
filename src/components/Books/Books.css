@@ -68,7 +68,7 @@
     max-width: calc(100% - 2*30px);
     grid-template-columns: repeat(3, 270px);
     padding: 70px 30px 10px;
-    margin: 0 auto 0;
+    margin: 0 auto 50px;
     gap: 30px 30px;
   }
 
