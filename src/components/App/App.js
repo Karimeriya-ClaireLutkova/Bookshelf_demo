@@ -4,6 +4,7 @@ import Main from '../Main/Main';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Footer from '../Footer/Footer';
 import AddBookPopup from '../AddBookPopup/AddBookPopup';
+import EditInfoBookPopup from '../EditInfoBookPopup/EditInfoBookPopup';
 import { listBooks, listImages } from '../../utils/constants';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
   const imagesListStorage = localStorage.getItem("base64");
   const [booksAll, setBooksAll] = React.useState(booksAllStorage ? booksAllStorage : []);
   const [isAddBookPopupOpen, setAddBookPopupOpen] = React.useState(false);
+  const [isEditBookPopupOpen, setEditBookPopupOpen] = React.useState(false)
   const [isNotBooksInfo, setNotBooksInfo] = React.useState(false);
 
   React.useEffect(() => {
@@ -36,6 +38,10 @@ function App() {
 
   function handleAddBookPopup() {
     setAddBookPopupOpen(true);
+  }
+
+  function handleEditInfoBookPopup() {
+    setEditBookPopupOpen(true);
   }
   
   function counterBooksLength() {
@@ -74,7 +80,7 @@ function App() {
 
   function closeAllPopups() {
     setAddBookPopupOpen(false);
-    /*setEditBookPopupOpen(false);*/
+    setEditBookPopupOpen(false);
   }
 
   return (
@@ -82,6 +88,7 @@ function App() {
       <Routes>
         <Route path="/" element={
           <Main onAddBookPopup={handleAddBookPopup}
+                onEditInfoBook={handleEditInfoBookPopup}
                 onBookDelete={handleBookDelete}
                 booksAll={booksAll}
                 isNotBooksInfo={isNotBooksInfo}                
@@ -95,6 +102,7 @@ function App() {
       </Routes>
       <Footer />
       <AddBookPopup isOpen={isAddBookPopupOpen} onClose={closeAllPopups} onAddBook={handleAddBook} />
+      <EditInfoBookPopup isOpen={isEditBookPopupOpen} onClose={closeAllPopups} />
     </>
   )
 }

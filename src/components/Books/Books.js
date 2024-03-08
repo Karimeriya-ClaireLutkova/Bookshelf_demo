@@ -3,7 +3,7 @@ import BookCard from '../BooksCard/BooksCard';
 import { headingMain, contentAdditionally, notBooksInfo } from '../../utils/constants';
 import './Books.css';
 
-function Books({ booksAll, onBookDelete, isNotBooksInfo }) {
+function Books({ booksAll, onEditInfoBook, onBookDelete, isNotBooksInfo }) {
   const [booksList, setBooksList] = React.useState(booksAll);
   const [isNotBooks, setNotBooks] = React.useState(false);
 
@@ -23,7 +23,7 @@ function Books({ booksAll, onBookDelete, isNotBooksInfo }) {
         <p className="elements__text">{notBooksInfo}</p>
       </div>
       <div className="elements__container">
-        {booksList.map((book, i) => (<BookCard key={book.id} book={book} onBookDelete={onBookDelete} />))}
+        {booksList.map((book, i) => (<BookCard key={book.id} book={book} onEditInfoBook={onEditInfoBook} onBookDelete={onBookDelete} />))}
       </div>
     </section>
   )

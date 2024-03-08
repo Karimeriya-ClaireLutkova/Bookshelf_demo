@@ -1,9 +1,10 @@
 import React from 'react';
-import { placeNameAddBook, placeNameAddImageDropdown, close } from '../../utils/constants'
+import { placeEditInfoBook, placeNameAddImageDropdown, close } from '../../utils/constants'
 import useFormValidator from '../../hooks/useFormValidator';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
-export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
+
+export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdateInfo }) {
   const imagesListStorage = localStorage.getItem("base64");
   const imagesNew = JSON.parse(imagesListStorage);
   const [name, setName] = React.useState('');
@@ -15,19 +16,16 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
   const className = `popup popup__list-example ${isOpenDropdown? "popup_opened" : ""}`;
   const element = document.querySelector("#book-image");
 
-  console.log(isValidCurrent, errors);
   React.useEffect(() => {
     if (isOpen) {
-      setName('');
-      setAuthor('');
-      setImage('');
-      resetForm();
+      setName(currentBook.name);
+      setAuthor(currentBook.about);
+      setImage(currentBook.image);
     };
-  }, [isOpen]);
+  }, [isOpen, currentBook]);
 
   function handleChangeInput(evt, isImageDropdown) {
-    console.log(isImageDropdown, evt);
-    handleChange({event: evt, placeName: isImageDropdown ? placeNameAddImageDropdown : placeNameAddBook});
+    handleChange({event: evt, placeName: isImageDropdown ? placeNameAddImageDropdown : placeEditInfoBook});
     if(evt.target.name === 'name') {
       setName(evt.target.value);
     } else if(evt.target.name === 'author') {
@@ -65,21 +63,22 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
     element.dispatchEvent(event);
     setImageCurrent('');
   }
+ 
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onAddBook({name, author, image});
+    onUpdateInfo({name, author, image});
     resetForm();
   }
 
   return (
-    <PopupWithForm id="1" 
-                   name="card-new" 
-                   title="Новая книга"
-                   isOpen={isOpen}
-                   onClose={onClose}
-                   onSubmit ={handleSubmit}
-                   buttonText={"Создать"}
+    <PopupWithForm id="2" 
+                   name="book-edit"
+                   title="Редактирование книги" 
+                   isOpen={isOpen} 
+                   onClose={onClose} 
+                   onSubmit={handleSubmit} 
+                   buttonText={"Сохранить"}
                    isValid={isValidCurrent}>
       <div className="popup__field popup__field_card-new">
         <div className={`popup__data-input ${errors.name ? "popup__data-input_error" : ""}`}>

@@ -51,7 +51,7 @@ export const textAddendum = " В современном мире это гора
 export const buttonAddendum = "Добавить новую книгу";
 export const placeNameAddBook = "addBook";
 export const placeNameAddImageDropdown = "dropdownAddBook";
-export const placeEditInfoBook = "placeNameAddBook";
+export const placeEditInfoBook = "editInfoBook";
 export const notBooksInfo = "Книжная полка пока пуста";
 export const listBooks = [
 {
