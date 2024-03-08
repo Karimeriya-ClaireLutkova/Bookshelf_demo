@@ -4,15 +4,15 @@ import Main from '../Main/Main';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Footer from '../Footer/Footer';
 import AddBookPopup from '../AddBookPopup/AddBookPopup';
-import { currentUser, userId, listBooks, listImages } from '../../utils/constants';
+import { listBooks, listImages } from '../../utils/constants';
 
 function App() {
   const booksListStorage = localStorage.getItem("booksList");
   const booksAllStorage = JSON.parse(booksListStorage);
   const imagesListStorage = localStorage.getItem("base64");
   const [booksAll, setBooksAll] = React.useState(booksAllStorage ? booksAllStorage : []);
-  const [userData, setUserData] = React.useState({ name: currentUser, id: userId, jwt: ''});
   const [isAddBookPopupOpen, setAddBookPopupOpen] = React.useState(false);
+  const [isNotBooksInfo, setNotBooksInfo] = React.useState(false);
 
   React.useEffect(() => {
     const booksCheck = () => {
@@ -39,23 +39,31 @@ function App() {
     booksAll.forEach(function() {
       arrLength++
     });
-    console.log(arrLength);
     const bookNew = {
       name: name,
       author: author,
       image: image,
       id: arrLength + 1,
-      owner: userData.id,
     };
-    console.log(bookNew.id);
+    if ((arrLength + 1) === 1) {
+      setNotBooksInfo(false);
+    }
     setBooksAll([bookNew, ...booksAll]);
     localStorage.setItem("booksList", JSON.stringify([bookNew, ...booksAll]));
     closeAllPopups();
   }
 
   function handleBookDelete(book) {
+    let arrayLength = 0;
+    booksAll.forEach(function() {
+      arrayLength++
+    });
+    console.log(arrayLength);
     const booksNewList = booksAll.filter((item) => item.id !== book.id);
     setBooksAll(booksNewList);
+    if ((arrayLength - 1) === 0) {
+      setNotBooksInfo(true);
+    }
     localStorage.setItem("booksList", JSON.stringify(booksNewList));
   }
 
@@ -68,10 +76,10 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={
-          <Main currentUser={userData}
-                onAddBookPopup={handleAddBookPopup}
+          <Main onAddBookPopup={handleAddBookPopup}
                 onBookDelete={handleBookDelete}
                 booksAll={booksAll}
+                isNotBooksInfo={isNotBooksInfo}                
           />
         }>
         </Route>

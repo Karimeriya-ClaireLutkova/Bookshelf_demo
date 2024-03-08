@@ -3,13 +3,13 @@ import Header from '../Header/Header';
 import Books from '../Books/Books';
 import Addendum from '../Addendum/Addendum'
 
-function Main({ currentUser, onAddBookPopup, booksAll, onBookDelete }) {
+function Main({ onAddBookPopup, booksAll, onBookDelete, isNotBooksInfo }) {
 
   return (
     <>
     <Header />
     <main>
-      <Books currentUser={currentUser} booksAll={booksAll} onBookDelete={onBookDelete} />
+      <Books booksAll={booksAll} onBookDelete={onBookDelete} isNotBooksInfo={isNotBooksInfo} />
       <Addendum onAddBook={onAddBookPopup} />
     </main>
     </>

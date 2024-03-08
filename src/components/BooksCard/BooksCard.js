@@ -1,7 +1,7 @@
 import React from 'react';
 import './BooksCard.css';
 
-function BooksCard({ currentUser, book, onCardClick, onBookDelete }) {
+function BooksCard({ book, onCardClick, onBookDelete }) {
 
   function handleClick() {
     onCardClick(book);

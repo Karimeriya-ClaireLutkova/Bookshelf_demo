@@ -26,6 +26,10 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
   }, [isOpen]);
 
   function handleChangeInput(evt) {
+    console.log(isImageDropdown);
+    if(isImageDropdown) {
+      console.log(evt);
+    }
     handleChange({event: evt, placeName: isImageDropdown ? placeNameAddImageDropdown : placeNameAddBook});
     if(evt.target.name === 'name') {
       setName(evt.target.value);
@@ -33,7 +37,6 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
       setAuthor(evt.target.value);
     } else if(evt.target.name === 'image') {
       setImage(evt.target.value);
-      console.log(evt.target)
     }
   }
 
@@ -42,12 +45,17 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
     setImageCurrent('');
     setImageDropdown(false);
     setOpenDropdown(true);
-    setImageDropdown(true);
   }
 
   function handleChangeDropdown(evt) {
     setImageCurrent(evt.target.value);
+    setImageDropdown(true);
     handleChange({event: evt, placeName: placeNameAddImageDropdown});
+  }
+
+  function handleChangeListener(e) {
+    handleChangeInput(e);
+    return element.removeEventListener('change', (e) => handleChangeListener(e), false);
   }
   
   function handleDropdown() {
@@ -56,11 +64,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
     element.value = imageCurrent;
     const event = new Event('change');
     element.addEventListener(
-      'change',
-      (e) => {
-        handleChangeInput(e);
-      },
-      false,
+    'change', (e) => handleChangeListener(e), false,
     );
     element.dispatchEvent(event);
   }
