@@ -10,6 +10,8 @@ function App() {
   const booksListStorage = localStorage.getItem("booksList");
   const booksAllStorage = JSON.parse(booksListStorage);
   const imagesListStorage = localStorage.getItem("base64");
+  document.cookie = "loginstatus=loggedin";
+  localStorage.setItem("loggedIn", true);
   const [booksAll, setBooksAll] = React.useState(booksAllStorage ? booksAllStorage : []);
   const [isAddBookPopupOpen, setAddBookPopupOpen] = React.useState(false);
   const [isNotBooksInfo, setNotBooksInfo] = React.useState(false);
@@ -29,16 +31,33 @@ function App() {
     booksCheck();
   }, [booksListStorage, imagesListStorage]);
 
+  React.useEffect(() => {
+    const handleUserLoggedIn = () => {
+      if(!document.cookie.split(";").indexOf("loginstatus=loggedin")) {  
+        localStorage.removeItem("loggedIn");
+      }
+      let session = localStorage.getItem("loggedIn");
+      if (session === null) {
+        closeAllPopups();
+      }
+    }      
+    handleUserLoggedIn();
+  }, []);
+
   function handleAddBookPopup() {
     setAddBookPopupOpen(true);
   }
   
-
-  function handleAddBook({name, author, image}) {
+  function counterBooksLength() {
     let arrLength = 0;
     booksAll.forEach(function() {
       arrLength++
     });
+    return arrLength;
+  }
+
+  function handleAddBook({name, author, image}) {
+    const arrLength = counterBooksLength();
     const bookNew = {
       name: name,
       author: author,
@@ -54,11 +73,7 @@ function App() {
   }
 
   function handleBookDelete(book) {
-    let arrayLength = 0;
-    booksAll.forEach(function() {
-      arrayLength++
-    });
-    console.log(arrayLength);
+    const arrayLength = counterBooksLength();
     const booksNewList = booksAll.filter((item) => item.id !== book.id);
     setBooksAll(booksNewList);
     if ((arrayLength - 1) === 0) {
@@ -69,6 +84,9 @@ function App() {
 
   function closeAllPopups() {
     setAddBookPopupOpen(false);
+    localStorage.removeItem("booksList");
+    localStorage.removeItem("booksList");
+    localStorage.removeItem("base64");
     /*setEditBookPopupOpen(false);*/
   }
 

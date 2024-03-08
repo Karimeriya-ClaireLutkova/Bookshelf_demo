@@ -3,8 +3,7 @@ import BookCard from '../BooksCard/BooksCard';
 import { headingMain, contentAdditionally, notBooksInfo } from '../../utils/constants';
 import './Books.css';
 
-function Books({ booksAll, onBookDelete, onChangeDescription, buttonInactive, isNotBooksInfo }) {
-  const className = `elements-adding__button ${buttonInactive ? "elements-adding__button_type_inactive" : ""}`;
+function Books({ booksAll, onBookDelete, isNotBooksInfo }) {
   const [booksList, setBooksList] = React.useState(booksAll);
   const [isNotBooks, setNotBooks] = React.useState(false);
 
@@ -16,10 +15,6 @@ function Books({ booksAll, onBookDelete, onChangeDescription, buttonInactive, is
     setNotBooks(isNotBooksInfo);
   }, [isNotBooksInfo]);
 
-  function handleChangeDescription() {
-    onChangeDescription(booksAll)
-  }
-
   return (
     <section className="elements" aria-label="Список книг">
       <h2 className="elements__title">{headingMain}</h2>
@@ -29,9 +24,6 @@ function Books({ booksAll, onBookDelete, onChangeDescription, buttonInactive, is
       </div>
       <div className="elements__container">
         {booksList.map((book, i) => (<BookCard key={book.id} book={book} onBookDelete={onBookDelete} />))}
-      </div>
-      <div className="elements-adding">
-        <button className={className} type="button" onClick={handleChangeDescription}>Ещё</button>
       </div>
     </section>
   )

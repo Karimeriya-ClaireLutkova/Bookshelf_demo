@@ -47,12 +47,13 @@
 }
 
 .elements__text {
-  color: #FFF;
-  font-size: 18px;
-  font-weight: 500;
+  color: #1E90FF;
+  font-size: 30px;
+  font-weight: 900;
   line-height: 1.11;
   margin: 0 auto 0;
   padding: 0 70px 0;
+  border: 1px solid #1E90FF;
 }
 
 .elements-adding {
@@ -60,31 +61,6 @@
   justify-content: center;
   max-width: calc(100% - 2*70px);
   margin: 0 70px 0;
-}
-
-.elements-adding__button {
-  width: 320px;
-  background-color: #2F2F2F;
-  color: #FFF;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.25;
-  border-radius: 6px;
-  padding: 11px 60px 9px 60px;
-  margin: 50px auto 80px;
-  border: none;
-}
-
-.elements-adding__button:hover {
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-.elements-adding__button_type_inactive {
-  cursor: default;
-  pointer-events: none;
-  display: none;
 }
 
 @media (max-width: 1279px) {

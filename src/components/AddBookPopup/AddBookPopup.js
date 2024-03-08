@@ -53,19 +53,19 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
     handleChange({event: evt, placeName: placeNameAddImageDropdown});
   }
 
-  function handleChangeListener(e) {
-    handleChangeInput(e);
-    return element.removeEventListener('change', (e) => handleChangeListener(e), false);
+  const event = new Event('change');
+    element.addEventListener(
+      'change', (e) => handleChangeListener(e), false,
+    );
+    
+  function handleChangeListener(event) {
+    handleChangeInput(event);
   }
   
   function handleDropdown() {
     setImage(imageCurrent);
     handleCloseDropdown();
     element.value = imageCurrent;
-    const event = new Event('change');
-    element.addEventListener(
-    'change', (e) => handleChangeListener(e), false,
-    );
     element.dispatchEvent(event);
   }
 
@@ -110,10 +110,10 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
             {isOpenDropdown ?
               (<div className={className}>
                 <div className="popup__container popup__container_image-dropdown">
-                <button id="image-dropdown" type="button" onClick={handleCloseDropdown} className="popup__button popup__button_close popup__button_close_image-dropdown" aria-label={close + "image-dropdown"} />
+                <button type="button" onClick={handleCloseDropdown} className="popup__button popup__button_close popup__button_close_image-dropdown" aria-label={close + "image-dropdown"} />
                   <div className="popup__list">
                     {imagesListStorage ? imagesNew.map((image, i) =>
-                      <div>
+                      <div id={image.name + i}>
                         <label htmlFor={image.id}><img id={image.name} className="popup__image" src={image.image} alt={image.name} /></label>
                         <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id} value={image.image} name="image" onChange={handleChangeDropdown} />
                       </div>
