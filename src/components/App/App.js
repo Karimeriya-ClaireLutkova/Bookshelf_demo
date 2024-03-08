@@ -13,7 +13,8 @@ function App() {
   const imagesListStorage = localStorage.getItem("base64");
   const [booksAll, setBooksAll] = React.useState(booksAllStorage ? booksAllStorage : []);
   const [isAddBookPopupOpen, setAddBookPopupOpen] = React.useState(false);
-  const [isEditBookPopupOpen, setEditBookPopupOpen] = React.useState(false)
+  const [isEditBookPopupOpen, setEditBookPopupOpen] = React.useState(false);
+  const [currentBook, setCurrentBook] = React.useState({});
   const [isNotBooksInfo, setNotBooksInfo] = React.useState(false);
 
   React.useEffect(() => {
@@ -40,8 +41,9 @@ function App() {
     setAddBookPopupOpen(true);
   }
 
-  function handleEditInfoBookPopup() {
+  function handleEditInfoBookPopup(book) {
     setEditBookPopupOpen(true);
+    setCurrentBook(book);
   }
   
   function counterBooksLength() {
@@ -102,7 +104,7 @@ function App() {
       </Routes>
       <Footer />
       <AddBookPopup isOpen={isAddBookPopupOpen} onClose={closeAllPopups} onAddBook={handleAddBook} />
-      <EditInfoBookPopup isOpen={isEditBookPopupOpen} onClose={closeAllPopups} />
+      <EditInfoBookPopup isOpen={isEditBookPopupOpen} onClose={closeAllPopups} currentBook={currentBook}/>
     </>
   )
 }
