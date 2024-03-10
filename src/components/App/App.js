@@ -45,6 +45,13 @@ function App() {
     setEditBookPopupOpen(true);
     setCurrentBook(book);
   }
+
+  function handleEditBook(book) {
+    let books = booksAll.map(item => item.id === book.id ? book : item);
+    setBooksAll(books);
+    localStorage.setItem("booksList", JSON.stringify(books));
+    closeAllPopups();
+  }
   
   function counterBooksLength() {
     let arrLength = 0;
@@ -104,7 +111,7 @@ function App() {
       </Routes>
       <Footer />
       <AddBookPopup isOpen={isAddBookPopupOpen} onClose={closeAllPopups} onAddBook={handleAddBook} />
-      <EditInfoBookPopup isOpen={isEditBookPopupOpen} onClose={closeAllPopups} currentBook={currentBook}/>
+      <EditInfoBookPopup isOpen={isEditBookPopupOpen} onClose={closeAllPopups} currentBook={currentBook} onUpdateInfo={handleEditBook}/>
     </>
   )
 }

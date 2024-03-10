@@ -11,11 +11,12 @@ export default function useFormValidator() {
   const [currentImage, setCurrentImage] = React.useState('');
   const [isValidCurrent, setIsValidCurrent] = React.useState(false);
   const [placeNameCurrent, setPlaceNameCurrent] = React.useState('');
+  const [isCheckImage, setCheckImage] = React.useState('');
 
   React.useEffect(() => {
     if(placeNameCurrent === placeNameAddBook || placeNameCurrent === placeEditInfoBook || placeNameCurrent === placeNameAddImageDropdown) {
       const checkFormErrors = (errors) => {
-        if(placeNameCurrent === placeNameAddBook || placeNameAddImageDropdown) {
+        if(placeNameCurrent === placeNameAddBook || (placeNameCurrent === placeNameAddImageDropdown && isCheckImage === false)) {
           if(errors.name !== '' && errors.name === undefined) {
             setIsValid(false);
           } else if(errors.author !== '' || errors.author === undefined) {
@@ -24,7 +25,7 @@ export default function useFormValidator() {
           } else if((errors.name === '') && (errors.author === '') && (errors.image === '')) {
             setIsValid(true);
           }
-        } else if(placeNameCurrent === placeEditInfoBook) {
+        } else if(placeNameCurrent === placeEditInfoBook || (placeNameCurrent === placeNameAddImageDropdown && isCheckImage === true)) {
           if(errors.name !== '' && errors.name !== undefined) {
             setIsValid(false);
           } else if(errors.author !== '' && errors.author !== undefined) {
@@ -39,14 +40,14 @@ export default function useFormValidator() {
                     ((errors.image === undefined) && (errors.name === '') && (errors.author === '')) ||
                     ((errors.image === undefined) && (errors.name === undefined) && (errors.author === ''))) {
             setIsValid(true);
-          } else if((errors.name === undefined) && (errors.email === undefined)) {
+          } else if((errors.name === undefined) && (errors.author === undefined) && (errors.image === undefined)) {
             setIsValid(false);
           }
         }
       }
       checkFormErrors(errors);
     }
-  }, [errors, placeNameCurrent]);
+  }, [errors, placeNameCurrent, isCheckImage]);
 
   React.useEffect(() => {
     if(placeNameCurrent === placeNameAddBook || placeNameCurrent === placeEditInfoBook || placeNameCurrent === placeNameAddImageDropdown) {
@@ -68,7 +69,7 @@ export default function useFormValidator() {
     const value = target.value;
     if(data.currentBook !== undefined) {
       setCurrentName(data.currentBook.name);
-      setCurrentAuthor(data.currentBook.email);
+      setCurrentAuthor(data.currentBook.author);
       setCurrentImage(data.currentBook.image);
     }
     setValues({...values, [name]: value});
@@ -78,11 +79,18 @@ export default function useFormValidator() {
       setIsValid(true);
     } else {
       setPlaceNameCurrent(data.placeName);
+      if(data.placeName === placeNameAddImageDropdown) {
+        if(target.checkImage !== undefined) {
+          const checkImage = target.checkImage;
+          setCheckImage(checkImage);
+          checkFieldsForm(name, value, data.placeName, checkImage);
+        }
+      }
       checkFieldsForm(name, value, data.placeName);
     }
   };
 
-  function checkFieldsForm(name, value, placeName) {
+  function checkFieldsForm(name, value, placeName, checkImage) {
     if (name === "name") {
       if (value.length === 0) {
         setErrors({...errors, [name]: "Поле Название не может быть пустым."});
@@ -94,15 +102,14 @@ export default function useFormValidator() {
         } else if (value.length > 100) {
           setErrors({...errors, [name]: "Поле Название не может быть больше 100 символов."});
           setValidNew(false);
-        } else if (value.length > 2 && value.length <= 30) {
+        } else if (value.length > 2 && value.length <= 100) {
           if (placeName === placeNameAddBook) {
             setValidNew(true);
           } else if (placeName === placeEditInfoBook) {
-            const currentNameNew = currentName.toLowerCase();
-            if (currentNameNew === value) {
+            if (currentName === value) {
               setErrors({...errors, [name]: "Введите Название, отличающееся от изначального."});
               setValidNew(false);
-            } else if (currentNameNew !== value) {
+            } else if (currentName !== value) {
               setValidNew(true);
             }
           }
@@ -123,12 +130,11 @@ export default function useFormValidator() {
         } else if (value.length > 2 && value.length <= 30) {
           if (placeName === placeNameAddBook) {
             setValidNew(true);
-          } else if (placeNameCurrent === placeEditInfoBook) {
-            const currentAuthorNew = currentAuthor.toLowerCase();
-            if (currentAuthorNew === value) {
+          } else if (placeName === placeEditInfoBook) {
+            if (currentAuthor === value) {
               setErrors({...errors, [name]: "Введите Автора, отличающегося от изначального."});
               setValidNew(false);
-            } else if (currentAuthorNew !== value) {
+            } else if (currentAuthor !== value) {
               setValidNew(true);
             }
           }
@@ -140,15 +146,26 @@ export default function useFormValidator() {
         setErrors({...errors, [name]: "Поле Картинка не может быть пустым."});
         setValidNew(false);
       } else if (value.length > 0) {
-        if (placeName === placeNameAddImageDropdown) {
+        if (placeName === placeNameAddImageDropdown && checkImage === false) {
           setValidNew(true);
-        } else {
-          if (!new RegExp(/^https?:\/\/(www\.)?([0-9a-zA-Z.-]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.?(?:jpe?g|gif|png|bmp|webp)?$/).test(value)) {
-            setErrors({...errors, [name]: "Неверный формат ссылки или изображения."});
+        } else if(placeName === placeEditInfoBook || (placeName === placeNameAddImageDropdown && checkImage === true)) {
+          if (currentImage === value) {
+            setErrors({...errors, [name]: "Введите значение, отличающееся от изначального."});
             setValidNew(false);
-          } else if (new RegExp(/^https?:\/\/(www\.)?([0-9a-zA-Z.-]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.?(?:jpe?g|gif|png|bmp|webp)?$/).test(value)) {
-            setValidNew(true);
+          } else if (currentImage !== value) {
+            if (placeName === placeNameAddImageDropdown) {
+              setValidNew(true);
+            } else {
+              if (!new RegExp(/^https?:\/\/(www\.)?([0-9a-zA-Z.-]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.?(?:jpe?g|gif|png|bmp|webp)?$/).test(value)) {
+                setErrors({...errors, [name]: "Неверный формат ссылки или изображения."});
+                setValidNew(false);
+              } else if (new RegExp(/^https?:\/\/(www\.)?([0-9a-zA-Z.-]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.?(?:jpe?g|gif|png|bmp|webp)?$/).test(value)) {
+                setValidNew(true);
+              }
+            }
           }
+        } else {
+          setValidNew(true);
         }
       }
     }

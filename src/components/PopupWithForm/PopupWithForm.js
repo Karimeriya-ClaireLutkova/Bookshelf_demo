@@ -8,8 +8,7 @@ function PopupWithForm({ isOpen,
                          title, 
                          onSubmit, 
                          children, 
-                         buttonText, 
-                         isActive, 
+                         buttonText,
                          isValid}) {
   const className = `popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`;
 
@@ -22,7 +21,7 @@ function PopupWithForm({ isOpen,
           <div className="popup__form-info">
             {children}
           </div>
-          <button id="profile-button-submit" type="submit" className={`popup__button popup__button_save ${isActive ? `popup__button_show popup__button_show_${name}` : "popup__button_hide"} ${!isValid ? "popup__button_inactive" : ""}`} disabled={!isValid ? true : ''}>{buttonText}</button>
+          <button id="content-button-submit" type="submit" className={`popup__button popup__button_save ${!isValid ? "popup__button_inactive" : ""}`} disabled={!isValid ? true : ''}>{buttonText}</button>
         </form>
       </div>
     </div>

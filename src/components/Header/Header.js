@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import logoHeader from '../../images/logo_header.jpg';
+import logoHeader from '../../images/logo-header.png';
 import { headingHeader, content, details } from '../../utils/constants';
 import './Header.css';
 
