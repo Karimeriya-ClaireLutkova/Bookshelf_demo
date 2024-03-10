@@ -23,6 +23,7 @@ function App() {
       if(!booksListStorage) {
         localStorage.setItem("booksList", JSON.stringify(listBooks));
         setBooksAll(listBooks);
+        setNotBooksInfo(false);
       } else {
         const arrLength = counterBooksLength();
         if(arrLength === 0) {
@@ -35,6 +36,17 @@ function App() {
       }
     }
     booksCheck();
+  }, []);
+
+  React.useEffect(() => {
+    const booksListStorage = localStorage.getItem("booksList");
+    const imagesListStorage = localStorage.getItem("base64");
+    if(!imagesListStorage) {
+      localStorage.setItem("base64", JSON.stringify(listImages));
+    }
+    if(!booksListStorage) {
+      localStorage.setItem("booksList", JSON.stringify(listBooks));
+    }
   }, [booksListStorage, imagesListStorage]);
 
   function handleAddBookPopup() {

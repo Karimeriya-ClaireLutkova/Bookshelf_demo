@@ -103,7 +103,7 @@
   }
 }
 
-@media (max-width: 765px) {
+@media (max-width: 600px) {
   .elements__container {
     max-width: 320px;
     grid-template-columns: 282px;
@@ -130,5 +130,6 @@
 
   .element__button_delete {
     opacity: 0.8;
+    transform: translate(100px, 0);
   }
 }

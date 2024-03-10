@@ -1,5 +1,5 @@
 import React from 'react';
-import { placeNameAddBook, placeNameAddImageDropdown, close } from '../../utils/constants'
+import { placeNameAddBook, placeNameAddImageDropdown, close, listImages } from '../../utils/constants'
 import useFormValidator from '../../hooks/useFormValidator';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
@@ -23,6 +23,13 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
       resetForm();
     };
   }, [isOpen]);
+
+  React.useEffect(() => {
+    const imagesListStorage = localStorage.getItem("base64");
+    if(!imagesListStorage) {
+      localStorage.setItem("base64", JSON.stringify(listImages));
+    }
+  }, [imagesListStorage]);
 
   function handleChangeInput(evt, isImageDropdown) {
     handleChange({event: evt, placeName: isImageDropdown ? placeNameAddImageDropdown : placeNameAddBook});
@@ -113,14 +120,19 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
               (<div className={className}>
                 <div className="popup__container popup__container_image-dropdown">
                 <button type="button" onClick={handleCancelDropdown} className="popup__button popup__button_close popup__button_close_image-dropdown" aria-label={close + "image-dropdown"} />
-                  <div id="image-dropdown-list" className="popup__list">
+                  <ul id="image-dropdown-list" className="popup__list">
                     {imagesListStorage ? imagesNew.map((image, i) =>
-                      <div>
+                      <li>
                         <label htmlFor={image.id + "-image"}><img id={image.id} className="popup__image" src={image.image} alt={image.name} /></label>
-                        <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "-image"} value={image.image} name="image" onChange={handleChangeDropdown} />
-                      </div>
-                    ) : ''}
-                  </div>
+                        <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "-image"} value={image.image} name="image" onChange={handleChangeDropdown} /> 
+                      </li>
+                    ) : listImages.map((image, i) =>
+                        <li>
+                          <label htmlFor={image.id + "-image"}><img id={image.id} className="popup__image" src={image.image} alt={image.name} /></label>
+                          <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "-image"} value={image.image} name="image" onChange={handleChangeDropdown} /> 
+                        </li>)
+                    }
+                  </ul>
                   <button type="button" className="popup__button popup__button_image-dropdown" onClick={handleDropdown}>Добавить</button>
                 </div>
               </div>

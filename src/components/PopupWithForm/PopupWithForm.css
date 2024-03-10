@@ -406,7 +406,15 @@
   padding: 0;
 }
 
-@media (max-width: 890px) {
+@media (max-width: 1100px) {
+  .popup_card-new {
+    width: calc(100% - 2*30px);
+    margin: 0 30px 0;
+  }
+}
+
+@media (max-width: 850px) {
+
   .popup_card-new {
     width: calc(100% - 2*30px);
     margin: 0 30px 0;
@@ -414,18 +422,36 @@
 }
 
 @media (max-width: 600px) {
+  .popup__container_book-edit {
+    padding: 15px;
+  }
+
+  .popup__list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 320px;
+  }
+
   .popup__title {
     width: 260px;
-    margin: 0 0 80px;
+    margin: 0 0 40px;
+  }
+
+  .popup__button_close {
+    width: 20px;
+    height: 20px;
+    transform: translate(10px, -40px);
   }
 
   .popup__button_save {
-    width: 260px;
+    width: 250px;
     font-size: 12px;
     line-height: 1.25;
     font-weight: 500;
     border-radius: 3px;
-    margin: 291px 0 14px;
+    margin: 30px;
   }
 
   .popup__field {
