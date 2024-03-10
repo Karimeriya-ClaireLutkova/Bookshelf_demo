@@ -130,12 +130,12 @@ export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdat
                 <button type="button" onClick={handleCancelDropdown} className="popup__button popup__button_close popup__button_close_image-dropdown" aria-label={close + "image-dropdown"} />
                   <ul id="image-dropdown-list" className="popup__list">
                     {imagesListStorage ? imagesNew.map((image, i) =>
-                      <li>
+                      <li className="popup__list-element">
                         <label htmlFor={image.id + "-image"}><img id={image.id} className="popup__image" src={image.image} alt={image.name} /></label>
                         <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "-image"} value={image.image} name="image" onChange={handleChangeDropdown} />
                       </li>
                     ) : listImages.map((image, i) =>
-                      <li>
+                      <li className="popup__list-element">
                         <label htmlFor={image.id + "-image"}><img id={image.id} className="popup__image" src={image.image} alt={image.name} /></label>
                         <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "-image"} value={image.image} name="image" onChange={handleChangeDropdown} />
                       </li>)

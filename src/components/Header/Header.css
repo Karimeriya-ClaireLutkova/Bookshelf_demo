@@ -117,18 +117,18 @@
 
 @media (max-width: 850px) {
   .header {
-    justify-content: space-between;
+    justify-content: center;
     padding: 15px 4px 30px;
   }
 
   .header__logo {
     left: 4px;
-    top: 230px
+    top: 120px
   }
 
   .header__title {
-    font-size: 85px;
-    max-width: 500px;
+    font-size: 70px;
+    width: 500px;
   }
 
   .header__subtitle {
@@ -138,6 +138,7 @@
 
   .header__picture-animated {
     height: 380px;
+    right: 10px;
   }
 
   .header__main-illustration {

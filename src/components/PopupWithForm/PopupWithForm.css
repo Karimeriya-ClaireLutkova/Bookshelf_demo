@@ -414,6 +414,13 @@
 }
 
 @media (max-width: 850px) {
+  .popup__list {
+    grid-template-columns: repeat(4, 145px);
+  }
+
+  .popup__button_close_image-dropdown {
+    transform: translate(45px, -90px);
+  }
 
   .popup_card-new {
     width: calc(100% - 2*30px);
@@ -430,8 +437,15 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 30px;
     max-width: 320px;
+    justify-content: center;
+  }
+
+  .popup__list-element {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
   }
 
   .popup__title {
@@ -440,9 +454,9 @@
   }
 
   .popup__button_close {
-    width: 20px;
-    height: 20px;
-    transform: translate(10px, -40px);
+    width: 30px;
+    height: 30px;
+    transform: translate(-5px, -70px);
   }
 
   .popup__button_save {
@@ -452,6 +466,22 @@
     font-weight: 500;
     border-radius: 3px;
     margin: 30px;
+  }
+
+  .popup__button_image-new {
+    width: 27px;
+    height: 27px;
+  }
+
+  .popup__input_type_image-dropdown {
+    width: 30px;
+    height: 30px;
+    margin-left: 20px;
+    transform: translate(-5px, -40px);
+  }
+
+  .popup__button_close_image-dropdown {
+    transform: translate(20px, -90px);
   }
 
   .popup__field {
