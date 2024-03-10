@@ -416,10 +416,18 @@
 @media (max-width: 850px) {
   .popup__list {
     grid-template-columns: repeat(4, 145px);
+    gap: 17px;
+  }
+
+  .popup__list-element {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
   }
 
   .popup__button_close_image-dropdown {
-    transform: translate(45px, -90px);
+    transform: translate(-5px, -100px);
   }
 
   .popup_card-new {
@@ -440,12 +448,6 @@
     gap: 30px;
     max-width: 320px;
     justify-content: center;
-  }
-
-  .popup__list-element {
-    display: flex;
-    flex-direction: column;
-    row-gap: 20px;
   }
 
   .popup__title {
@@ -529,5 +531,9 @@
 
   .popup__button_card-new_show {
     margin: 347px auto 40px;
+  }
+
+  .popup__image {
+    margin: 0 auto 40px;
   }
 }
