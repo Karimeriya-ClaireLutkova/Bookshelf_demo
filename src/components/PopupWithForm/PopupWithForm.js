@@ -2,12 +2,12 @@ import React from 'react';
 import { close } from '../../utils/constants';
 import './PopupWithForm.css';
 
-function PopupWithForm({ isOpen, 
-                         onClose, 
-                         name, 
-                         title, 
-                         onSubmit, 
-                         children, 
+function PopupWithForm({ isOpen,
+                         onClose,
+                         name,
+                         title,
+                         onSubmit,
+                         children,
                          buttonText,
                          isValid}) {
   const className = `popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`;

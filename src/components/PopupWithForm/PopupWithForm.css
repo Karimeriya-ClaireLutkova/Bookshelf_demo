@@ -343,7 +343,6 @@
   min-height: 42px;
   margin: 0 0 18px;
   padding: 0;
-  
 }
 
 .popup__data-input {
@@ -386,7 +385,7 @@
   transform: translate(-16px, -32px);
 }
 
-.popup__button_image-new_edit { 
+.popup__button_image-new_edit {
   transform: translate(-5px, -35px);
 }
 
@@ -499,7 +498,7 @@
   }
 
   .popup__error {
-    max-width: 260px;    
+    max-width: 260px;
   }
 
   .popup__link {

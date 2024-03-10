@@ -1,5 +1,5 @@
 import React from 'react';
-import { placeNameAddBook, placeEditInfoBook, placeNameAddImageDropdown } from '../utils/constants'
+import { placeNameAddBook, placeEditInfoBook, placeNameAddImageDropdown } from '../utils/constants';
 
 export default function useFormValidator() {
   const [values, setValues] = React.useState({});
@@ -13,6 +13,7 @@ export default function useFormValidator() {
   const [placeNameCurrent, setPlaceNameCurrent] = React.useState('');
   const [isCheckImage, setCheckImage] = React.useState('');
 
+  /* Проверяем данные в массиве ошибок, для определения валидности данных */
   React.useEffect(() => {
     if(placeNameCurrent === placeNameAddBook || placeNameCurrent === placeEditInfoBook || placeNameCurrent === placeNameAddImageDropdown) {
       const checkFormErrors = (errors) => {
@@ -49,6 +50,7 @@ export default function useFormValidator() {
     }
   }, [errors, placeNameCurrent, isCheckImage]);
 
+    /* Принимаем решение о валидности всей формы */
   React.useEffect(() => {
     if(placeNameCurrent === placeNameAddBook || placeNameCurrent === placeEditInfoBook || placeNameCurrent === placeNameAddImageDropdown) {
       const checkFormValid = (isValid, isValidNew) => {
@@ -62,6 +64,7 @@ export default function useFormValidator() {
     }
   }, [isValid, isValidNew, placeNameCurrent]);
 
+    /* Функция принятия данных из форм */
   const handleChange = (data) => {
     setIsValid(false);
     const target = data.event.target;
@@ -90,6 +93,7 @@ export default function useFormValidator() {
     }
   };
 
+  /* Функция, устанавливающая условия валидности вводимых данных по категории полей и соответствующим компонентам*/
   function checkFieldsForm(name, value, placeName, checkImage) {
     if (name === "name") {
       if (value.length === 0) {
@@ -171,6 +175,7 @@ export default function useFormValidator() {
     }
   }
 
+    /* Функция возврата в компонент обработанных данных и очистки хука */
   const resetForm = React.useCallback(
     (newValues = {}, newErrors = {}, newIsValid = false, newValid = false, newIsValidCurrent = false) => {
       setValues(newValues);

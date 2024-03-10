@@ -1,8 +1,7 @@
 import React from 'react';
-import { placeEditInfoBook, placeNameAddImageDropdown, close, listImages } from '../../utils/constants'
+import { placeEditInfoBook, placeNameAddImageDropdown, close, listImages } from '../../utils/constants';
 import useFormValidator from '../../hooks/useFormValidator';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
-
 
 export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdateInfo }) {
   const imagesListStorage = localStorage.getItem("base64");
@@ -16,6 +15,7 @@ export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdat
   const className = `popup popup__list-example ${isOpenDropdown? "popup_opened" : ""}`;
   const element = document.querySelector("#book-image");
 
+  /* Внесение данных из карточки книги в поля при открыти */
   React.useEffect(() => {
     if (isOpen) {
       resetForm();
@@ -25,6 +25,7 @@ export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdat
     };
   }, [isOpen, currentBook]);
 
+  /* Отслеживание наличия картинок в локальном хранилище */
   React.useEffect(() => {
     const imagesListStorage = localStorage.getItem("base64");
     if(!imagesListStorage) {
@@ -32,6 +33,7 @@ export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdat
     }
   }, [imagesListStorage]);
 
+  /* Функция проверки вводимых данных через хук */
   function handleChangeInput(evt, isImageDropdown) {
     handleChange({event: evt, placeName: isImageDropdown ? placeNameAddImageDropdown : placeEditInfoBook, currentBook});
     if(evt.target.name === 'name') {
@@ -43,16 +45,19 @@ export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdat
     }
   }
 
+  /* Функция открытия popup для выбора картинки из локального хранилища */
   function handleClickDropdown() {
     setImageCurrent('');
     setOpenDropdown(true);
   }
 
+  /* Функция отслеживания выбора картинки и проверки через хук */
   function handleChangeDropdown(evt) {
     setImageCurrent(evt.target.value);
     handleChange({event: evt, placeName: placeNameAddImageDropdown, checkImage: true});
   }
-  
+
+  /* Функция фиксации выбора и установки слушателя для последующей провеки через хук */
   function handleDropdown() {
     setImage(imageCurrent);
     const isImageDropdown = true;
@@ -74,11 +79,13 @@ export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdat
     handleCloseDropdown();
   }
 
+  /* Функция закрытия popup выбора картинки */
   function handleCloseDropdown() {
     setOpenDropdown(false);
     setImageCurrent('');
   }
- 
+
+  /* Функция отмены путем закрытия */
   function handleCancelDropdown() {
     const event = new CustomEvent('change', {
       cancelable: true
@@ -94,6 +101,7 @@ export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdat
     handleCloseDropdown();
   }
 
+  /* Функция отправки данных из формы */
   function handleSubmit(evt) {
     evt.preventDefault();
     onUpdateInfo({name: name, author: author, image: image, id: currentBook.id});
@@ -101,12 +109,12 @@ export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdat
   }
 
   return (
-    <PopupWithForm id="2" 
+    <PopupWithForm id="2"
                    name="book-edit"
-                   title="Редактирование книги" 
-                   isOpen={isOpen} 
-                   onClose={onClose} 
-                   onSubmit={handleSubmit} 
+                   title="Редактирование книги"
+                   isOpen={isOpen}
+                   onClose={onClose}
+                   onSubmit={handleSubmit}
                    buttonText={"Сохранить"}
                    isValid={isValidCurrent}>
       <div className="popup__field popup__field_book-edit">

@@ -17,6 +17,7 @@ function App() {
   const [currentBook, setCurrentBook] = React.useState({});
   const [isNotBooksInfo, setNotBooksInfo] = React.useState(false);
 
+  /* Проверяем и отображаем книги */
   React.useEffect(() => {
     const booksCheck = () => {
       const booksListStorage = localStorage.getItem("booksList");
@@ -38,6 +39,7 @@ function App() {
     booksCheck();
   }, []);
 
+  /* Проверить наличие книг и картинок в локальном хранилище и добавить по необходимости */
   React.useEffect(() => {
     const booksListStorage = localStorage.getItem("booksList");
     const imagesListStorage = localStorage.getItem("base64");
@@ -49,6 +51,7 @@ function App() {
     }
   }, [booksListStorage, imagesListStorage]);
 
+  /* Функции открытия popup редактирования и добавления книги */
   function handleAddBookPopup() {
     setAddBookPopupOpen(true);
   }
@@ -58,13 +61,15 @@ function App() {
     setCurrentBook(book);
   }
 
+  /* Функция редактирования книги */
   function handleEditBook(book) {
     let books = booksAll.map(item => item.id === book.id ? book : item);
     setBooksAll(books);
     localStorage.setItem("booksList", JSON.stringify(books));
     closeAllPopups();
   }
-  
+
+  /* Функция для проверки количества книг в массиве */
   function counterBooksLength() {
     let arrLength = 0;
     booksAll.forEach(function() {
@@ -73,6 +78,7 @@ function App() {
     return arrLength;
   }
 
+  /* Функция добавления книги */
   function handleAddBook({name, author, image}) {
     const arrLength = counterBooksLength();
     const bookNew = {
@@ -89,6 +95,7 @@ function App() {
     closeAllPopups();
   }
 
+  /* Функция удаления книги */
   function handleBookDelete(book) {
     const arrayLength = counterBooksLength();
     const booksNewList = booksAll.filter((item) => item.id !== book.id);
@@ -99,6 +106,7 @@ function App() {
     localStorage.setItem("booksList", JSON.stringify(booksNewList));
   }
 
+  /* Функция закрытия popup */
   function closeAllPopups() {
     setAddBookPopupOpen(false);
     setEditBookPopupOpen(false);
@@ -112,7 +120,7 @@ function App() {
                 onEditInfoBook={handleEditInfoBookPopup}
                 onBookDelete={handleBookDelete}
                 booksAll={booksAll}
-                isNotBooksInfo={isNotBooksInfo}                
+                isNotBooksInfo={isNotBooksInfo}            
           />
         }>
         </Route>
@@ -123,7 +131,7 @@ function App() {
       </Routes>
       <Footer />
       <AddBookPopup isOpen={isAddBookPopupOpen} onClose={closeAllPopups} onAddBook={handleAddBook} />
-      <EditInfoBookPopup isOpen={isEditBookPopupOpen} onClose={closeAllPopups} currentBook={currentBook} onUpdateInfo={handleEditBook}/>
+      <EditInfoBookPopup isOpen={isEditBookPopupOpen} onClose={closeAllPopups} currentBook={currentBook} onUpdateInfo={handleEditBook} />
     </>
   )
 }

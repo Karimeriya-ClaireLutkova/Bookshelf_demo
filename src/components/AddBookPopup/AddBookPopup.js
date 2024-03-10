@@ -1,9 +1,9 @@
 import React from 'react';
-import { placeNameAddBook, placeNameAddImageDropdown, close, listImages } from '../../utils/constants'
+import { placeNameAddBook, placeNameAddImageDropdown, close, listImages } from '../../utils/constants';
 import useFormValidator from '../../hooks/useFormValidator';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
-export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
+export default function AddPlacePopup({ isOpen, onAddBook, onClose }) {
   const imagesListStorage = localStorage.getItem("base64");
   const imagesNew = JSON.parse(imagesListStorage);
   const [name, setName] = React.useState('');
@@ -15,6 +15,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
   const className = `popup popup__list-example ${isOpenDropdown? "popup_opened" : ""}`;
   const element = document.querySelector("#book-image");
 
+  /* Очистка данных при открыти */
   React.useEffect(() => {
     if (isOpen) {
       setName('');
@@ -24,6 +25,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
     };
   }, [isOpen]);
 
+  /* Отслеживание наличия картинок в локальном хранилище */
   React.useEffect(() => {
     const imagesListStorage = localStorage.getItem("base64");
     if(!imagesListStorage) {
@@ -31,6 +33,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
     }
   }, [imagesListStorage]);
 
+  /* Функция проверки вводимых данных через хук */
   function handleChangeInput(evt, isImageDropdown) {
     handleChange({event: evt, placeName: isImageDropdown ? placeNameAddImageDropdown : placeNameAddBook});
     if(evt.target.name === 'name') {
@@ -42,17 +45,20 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
     }
   }
 
+  /* Функция открытия popup для выбора картинки из локального хранилища */
   function handleClickDropdown() {
     setImage('');
     setImageCurrent('');
     setOpenDropdown(true);
   }
 
+  /* Функция отслеживания выбора картинки и проверки через хук */
   function handleChangeDropdown(evt) {
     setImageCurrent(evt.target.value);
     handleChange({event: evt, placeName: placeNameAddImageDropdown});
   }
-  
+
+  /* Функция фиксации выбора и установки слушателя для последующей провеки через хук */
   function handleDropdown() {
     setImage(imageCurrent);
     const isImageDropdown = true;
@@ -67,11 +73,13 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
     handleCloseDropdown();
   }
 
+  /* Функция закрытия popup выбора картинки */
   function handleCloseDropdown() {
     setOpenDropdown(false);
     setImageCurrent('');
   }
 
+  /* Функция отмены путем закрытия */
   function handleCancelDropdown() {
     const event = new CustomEvent('change', {
       cancelable: true
@@ -86,6 +94,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
     handleCloseDropdown();
   }
 
+  /* Функция отправки данных из формы */
   function handleSubmit(evt) {
     evt.preventDefault();
     onAddBook({name, author, image});
@@ -93,8 +102,8 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
   }
 
   return (
-    <PopupWithForm id="1" 
-                   name="card-new" 
+    <PopupWithForm id="1"
+                   name="card-new"
                    title="Новая книга"
                    isOpen={isOpen}
                    onClose={onClose}
@@ -124,12 +133,12 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, isLoad }) {
                     {imagesListStorage ? imagesNew.map((image, i) =>
                       <li className="popup__list-element">
                         <label htmlFor={image.id + "-image"}><img id={image.id} className="popup__image" src={image.image} alt={image.name} /></label>
-                        <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "-image"} value={image.image} name="image" onChange={handleChangeDropdown} /> 
+                        <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "-image"} value={image.image} name="image" onChange={handleChangeDropdown} />
                       </li>
                     ) : listImages.map((image, i) =>
                         <li className="popup__list-element">
                           <label htmlFor={image.id + "-image"}><img id={image.id} className="popup__image" src={image.image} alt={image.name} /></label>
-                          <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "-image"} value={image.image} name="image" onChange={handleChangeDropdown} /> 
+                          <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "-image"} value={image.image} name="image" onChange={handleChangeDropdown} />
                         </li>)
                     }
                   </ul>
