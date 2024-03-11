@@ -1,6 +1,13 @@
 import React from 'react';
 import './Addendum.css';
-import { headingAddendum, subtitleAddendum, paragraphAddendum1, paragraphAddendum2, textAddendum, buttonAddendum } from '../../utils/constants';
+import { headingAddendum, 
+         subtitleAddendum,
+         paragraphAddendum1,
+         paragraphAddendum2,
+         textAddendum,
+         buttonAddendum,
+         arialLabelAddendum
+        } from '../../utils/constants';
 
 function Addendum({ onAddBook }) {
   function handleAddBookPopup() {
@@ -8,7 +15,7 @@ function Addendum({ onAddBook }) {
   }
 
   return (
-    <section id="content1" className="addendum" aria-label="две колонки">
+    <section id="content1" className="addendum" aria-label={arialLabelAddendum} >
       <h2 className="title title_addendum">{headingAddendum}</h2>
       <div className="addendum__container">
         <h3 className="subtitle subtitle_addendum">{subtitleAddendum}</h3>

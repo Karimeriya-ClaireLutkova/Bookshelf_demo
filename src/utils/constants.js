@@ -53,6 +53,37 @@ export const placeNameAddBook = "addBook";
 export const placeNameAddImageDropdown = "dropdownAddBook";
 export const placeEditInfoBook = "editInfoBook";
 export const notBooksInfo = "Книжная полка пока пуста";
+export const warningNameRequired = "Поле Название не может быть пустым.";
+export const warningNameShort = "Поле Название не может быть меньше 2 символов.";
+export const warningNameLong = "Поле Название не может быть больше 100 символов.";
+export const warningNameSymbols = "Используйте только латиницу или кириллицу,цифры, дефис и один пробел.";
+export const warningNameIdentical = "Введите Название, отличающееся от изначального.";
+export const warningAuthorRequired = "Поле Автор не может быть пустым.";
+export const warningAuthorShort = "Поле Автор не может быть меньше 2 символов.";
+export const warningAuthorLong = "Поле Автор не может быть больше 30 символов.";
+export const warningAuthorSymbols = "Используйте только латиницу или кириллицу, дефис и один пробел.";
+export const warningAuthorIdentical = "Введите Автора, отличающегося от изначального.";
+export const warningImageRequired = "Поле Картинка не может быть пустым.";
+export const warningImageIdentical = "Введите значение, отличающееся от изначального.";
+export const warningImageFormat = "Неверный формат ссылки или изображения.";
+export const errorDownloadImage = "Анализ изображения не прошел";
+export const placeholderNameBook = "Название";
+export const placeholderAuthorBook = "Автор";
+export const placeholderBookAdd = "Добавить картинку";
+export const buttonBookAdd = "Добавить";
+export const titlePopupBookAdd = "Новая книга";
+export const buttonPopupBookAdd = "Создать";
+export const arialLabelAddendum = "две колонки";
+export const ariaLabelBooks = "Список книг";
+export const ariaLabelButtonDeleteBook = "Удалить карточку места";
+export const ariaLabelButtonEditBook = "Редактировать информацию о книге";
+export const titlePopupBookEdit = "Редактирование книги";
+export const buttonPopupBookEdit = "Сохранить";
+export const altLogoHeader = "Логотип Bookshelf";
+export const titleMissingPage = "404";
+export const subtitleMissingPage = "Страница не найдена";
+export const buttonMissingPage = "Назад";
+
 export const listBooks = [
 {
   name: 'Эффективная работа с унаследованным кодом',

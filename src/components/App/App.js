@@ -5,7 +5,7 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Footer from '../Footer/Footer';
 import AddBookPopup from '../AddBookPopup/AddBookPopup';
 import EditInfoBookPopup from '../EditInfoBookPopup/EditInfoBookPopup';
-import { listBooks, listImages } from '../../utils/constants';
+import { listBooks, listImages, errorDownloadImage } from '../../utils/constants';
 
 function App() {
   const booksListStorage = localStorage.getItem("booksList");
@@ -61,7 +61,7 @@ function App() {
         resolve(img)
       };
       img.onerror = () => {
-        reject(new Error("Анализ изображения не прошел"))
+        reject(new Error(errorDownloadImage))
       }
     })
   }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { titleMissingPage, subtitleMissingPage, buttonMissingPage } from '../../utils/constants';
 import './NotFoundPage.css';
 
 function NotFoundPage() {
@@ -17,9 +18,9 @@ function NotFoundPage() {
     <main>
       <section className="missing-page">
         <div className="missing-page__container">
-          <h1 className="missing-page__title">404</h1>
-          <h2 className="missing-page__subtitle">Страница не найдена</h2>
-          <button type="button" className="missing-page__button" onClick={handleGoBackPageNav}>Назад</button>
+          <h1 className="missing-page__title">{titleMissingPage}</h1>
+          <h2 className="missing-page__subtitle">{subtitleMissingPage}</h2>
+          <button type="button" className="missing-page__button" onClick={handleGoBackPageNav}>{buttonMissingPage}</button>
         </div>
       </section>
     </main>

@@ -1,10 +1,20 @@
 import React from 'react';
-import { placeNameAddBook, placeNameAddImageDropdown, close, listImages } from '../../utils/constants';
+import { placeNameAddBook,
+         placeNameAddImageDropdown,
+         close,
+         listImages,
+         placeholderNameBook,
+         placeholderAuthorBook,
+         placeholderBookAdd,
+         buttonBookAdd,
+         titlePopupBookAdd,
+         buttonPopupBookAdd
+        } from '../../utils/constants';
 import useFormValidator from '../../hooks/useFormValidator';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
 export default function AddPlacePopup({ isOpen, onAddBook, onClose }) {
-  const imagesListStorage = localStorage.getItem("base64");
+  const imagesListStorage = localStorage.getItem("images");
   const imagesNew = JSON.parse(imagesListStorage);
   const [name, setName] = React.useState('');
   const [author, setAuthor] = React.useState('');
@@ -27,9 +37,9 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose }) {
 
   /* Отслеживание наличия картинок в локальном хранилище */
   React.useEffect(() => {
-    const imagesListStorage = localStorage.getItem("base64");
+    const imagesListStorage = localStorage.getItem("images");
     if(!imagesListStorage) {
-      localStorage.setItem("base64", JSON.stringify(listImages));
+      localStorage.setItem("images", JSON.stringify(listImages));
     }
   }, [imagesListStorage]);
 
@@ -104,23 +114,23 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose }) {
   return (
     <PopupWithForm id="1"
                    name="card-new"
-                   title="Новая книга"
+                   title={titlePopupBookAdd}
                    isOpen={isOpen}
                    onClose={onClose}
                    onSubmit ={handleSubmit}
-                   buttonText={"Создать"}
+                   buttonText={buttonPopupBookAdd}
                    isValid={isValidCurrent}>
       <div className="popup__field popup__field_card-new">
         <div className={`popup__data-input ${errors.name ? "popup__data-input_error" : ""}`}>
-          <input id="book-name-input" type="text" className="popup__input popup__input_type_card-name" name="name" value={name} onChange={handleChangeInput} placeholder="Название" required />
+          <input id="book-name-input" type="text" className="popup__input popup__input_type_card-name" name="name" value={name} onChange={handleChangeInput} placeholder={placeholderNameBook} required />
           <span className={`book-name-input-error popup__input-error ${errors.name ? "popup__input-error_active" : ""}`}>{errors.name}</span>
         </div>
         <div className={`popup__data-input ${errors.author ? "popup__data-input_error" : ""}`}>
-          <input id="book-author" type="text" className="popup__input popup__input_type_card-name" name="author" value={author} onChange={handleChangeInput} placeholder="Автор" required />
+          <input id="book-author" type="text" className="popup__input popup__input_type_card-name" name="author" value={author} onChange={handleChangeInput} placeholder={placeholderAuthorBook} required />
           <span className={`book-author-error popup__input-error ${errors.author ? "popup__input-error_active" : ""}`}>{errors.author}</span>
         </div>
         <div className={`popup__data-input ${errors.image ? "popup__data-input_error" : ""}`}>
-          <input id="book-image" type="text" className="popup__input popup__input_type_card-name" name="image" value={image} onChange={handleChangeInput} placeholder="Добавить картинку" required />
+          <input id="book-image" type="text" className="popup__input popup__input_type_card-name" name="image" value={image} onChange={handleChangeInput} placeholder={placeholderBookAdd} required />
           <div className="popup-span-group">
             <span className={`book-image-error popup__input-error ${errors.image ? "popup__input-error_active" : ""}`}>{errors.image}</span>
             <button type="button" className="popup__button popup__button_image-new popup__button_image-new_add" onClick={handleClickDropdown}></button>
@@ -142,7 +152,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose }) {
                         </li>)
                     }
                   </ul>
-                  <button type="button" className="popup__button popup__button_image-dropdown" onClick={handleDropdown}>Добавить</button>
+                  <button type="button" className="popup__button popup__button_image-dropdown" onClick={handleDropdown}>{buttonBookAdd}</button>
                 </div>
               </div>
               ) : ''

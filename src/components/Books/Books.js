@@ -1,6 +1,6 @@
 import React from 'react';
 import BookCard from '../BooksCard/BooksCard';
-import { headingMain, contentAdditionally, notBooksInfo } from '../../utils/constants';
+import { headingMain, contentAdditionally, notBooksInfo, ariaLabelBooks } from '../../utils/constants';
 import './Books.css';
 
 function Books({ booksAll, onEditInfoBook, onBookDelete, isNotBooksInfo }) {
@@ -16,7 +16,7 @@ function Books({ booksAll, onEditInfoBook, onBookDelete, isNotBooksInfo }) {
   }, [isNotBooksInfo]);
 
   return (
-    <section className="elements" aria-label="Список книг">
+    <section className="elements" aria-label={ariaLabelBooks}>
       <h2 className="elements__title">{headingMain}</h2>
       <p className="elements__subtitle">{contentAdditionally}</p>
       <div className={`elements__container-info ${isNotBooks ? "elements__container-info_active" : ""}`}>

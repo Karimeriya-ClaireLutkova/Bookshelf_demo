@@ -1,5 +1,21 @@
 import React from 'react';
-import { placeNameAddBook, placeEditInfoBook, placeNameAddImageDropdown } from '../utils/constants';
+import { placeNameAddBook,
+         placeEditInfoBook,
+         placeNameAddImageDropdown,
+         warningNameRequired,
+         warningNameShort,
+         warningNameLong,
+         warningNameSymbols,
+         warningNameIdentical,
+         warningAuthorRequired,
+         warningAuthorShort,
+         warningAuthorLong,
+         warningAuthorSymbols,
+         warningAuthorIdentical,
+         warningImageRequired,
+         warningImageIdentical,
+         warningImageFormat
+        } from '../utils/constants';
 
 export default function useFormValidator() {
   const [values, setValues] = React.useState({});
@@ -97,24 +113,29 @@ export default function useFormValidator() {
   function checkFieldsForm(name, value, placeName, checkImage) {
     if (name === "name") {
       if (value.length === 0) {
-        setErrors({...errors, [name]: "Поле Название не может быть пустым."});
+        setErrors({...errors, [name]: warningNameRequired});
         setValidNew(false);
       } else if (value.length > 0) {
         if (value.length <= 2) {
-          setErrors({...errors, [name]: "Поле Название не может быть меньше 2 символов."});
+          setErrors({...errors, [name]: warningNameShort});
           setValidNew(false);
         } else if (value.length > 100) {
-          setErrors({...errors, [name]: "Поле Название не может быть больше 100 символов."});
+          setErrors({...errors, [name]: warningNameLong});
           setValidNew(false);
         } else if (value.length > 2 && value.length <= 100) {
-          if (placeName === placeNameAddBook) {
-            setValidNew(true);
-          } else if (placeName === placeEditInfoBook) {
-            if (currentName === value) {
-              setErrors({...errors, [name]: "Введите Название, отличающееся от изначального."});
-              setValidNew(false);
-            } else if (currentName !== value) {
+          if (!new RegExp(/^[a-zA-Zа-яёА-ЯЁ0-9]+(?:[\s-][a-zA-Zа-яёА-ЯЁ0-9]+)*$/).test(value)) {
+            setErrors({...errors, [name]: warningNameSymbols});
+            setValidNew(false);
+          } else if (new RegExp(/^[a-zA-Zа-яёА-ЯЁ0-9]+(?:[\s-][a-zA-Zа-яёА-ЯЁ0-9]+)*$/).test(value)) {
+            if (placeName === placeNameAddBook) {
               setValidNew(true);
+            } else if (placeName === placeEditInfoBook) {
+              if (currentName === value) {
+                setErrors({...errors, [name]: warningNameIdentical});
+                setValidNew(false);
+              } else if (currentName !== value) {
+                setValidNew(true);
+              }
             }
           }
         }
@@ -122,24 +143,29 @@ export default function useFormValidator() {
     }
     if (name === "author") {
       if (value.length === 0) {
-        setErrors({...errors, [name]: "Поле Автор не может быть пустым."});
+        setErrors({...errors, [name]: warningAuthorRequired});
         setValidNew(false);
       } else if (value.length > 0) {
         if (value.length <= 2) {
-          setErrors({...errors, [name]: "Поле Автор не может быть меньше 2 символов."});
+          setErrors({...errors, [name]: warningAuthorShort});
           setValidNew(false);
         } else if (value.length > 30) {
-          setErrors({...errors, [name]: "Поле Автор не может быть больше 30 символов."});
+          setErrors({...errors, [name]: warningAuthorLong});
           setValidNew(false);
         } else if (value.length > 2 && value.length <= 30) {
-          if (placeName === placeNameAddBook) {
-            setValidNew(true);
-          } else if (placeName === placeEditInfoBook) {
-            if (currentAuthor === value) {
-              setErrors({...errors, [name]: "Введите Автора, отличающегося от изначального."});
-              setValidNew(false);
-            } else if (currentAuthor !== value) {
+          if (!new RegExp(/^[a-zA-Zа-яёА-ЯЁ]+(?:[\s-][a-zA-Zа-яёА-ЯЁ]+)*$/).test(value)) {
+            setErrors({...errors, [name]: warningAuthorSymbols});
+            setValidNew(false);
+          } else if (new RegExp(/^[a-zA-Zа-яёА-ЯЁ]+(?:[\s-][a-zA-Zа-яёА-ЯЁ]+)*$/).test(value)) {
+            if (placeName === placeNameAddBook) {
               setValidNew(true);
+            } else if (placeName === placeEditInfoBook) {
+              if (currentAuthor === value) {
+                setErrors({...errors, [name]: warningAuthorIdentical});
+                setValidNew(false);
+              } else if (currentAuthor !== value) {
+                setValidNew(true);
+              }
             }
           }
         }
@@ -147,7 +173,7 @@ export default function useFormValidator() {
     }
     if(name === "image") {
       if (value.length === 0) {
-        setErrors({...errors, [name]: "Поле Картинка не может быть пустым."});
+        setErrors({...errors, [name]: warningImageRequired});
         setValidNew(false);
       } else if (value.length > 0) {
         if (placeName === placeNameAddImageDropdown && checkImage === false) {
@@ -158,7 +184,7 @@ export default function useFormValidator() {
           if (placeName === placeEditInfoBook || (placeName === placeNameAddImageDropdown && checkImage === true)) {
             console.log(8);
             if (currentImage === value) {
-              setErrors({...errors, [name]: "Введите значение, отличающееся от изначального."});
+              setErrors({...errors, [name]: warningImageIdentical});
               setValidNew(false);
               console.log(4);
             } else {
@@ -170,7 +196,7 @@ export default function useFormValidator() {
           }
           if (placeName === placeEditInfoBook || placeName === placeNameAddBook) {
             if (!new RegExp(/^https?:\/\/(www\.)?([0-9a-zA-Z.-]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.?(?:jpeg|gif|png|bmp|webp)?$/).test(value)) {
-              setErrors({...errors, [name]: "Неверный формат ссылки или изображения."});
+              setErrors({...errors, [name]: warningImageFormat});
               setValidNew(false);
               console.log(1);
             } else if (new RegExp(/^https?:\/\/(www\.)?([0-9a-zA-Z.-]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.?(?:jpeg|gif|png|bmp|webp)?$/).test(value)) {
