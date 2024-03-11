@@ -176,7 +176,7 @@ function App() {
                 onEditInfoBook={handleEditInfoBookPopup}
                 onBookDelete={handleBookDelete}
                 booksAll={booksAll}
-                isNotBooksInfo={isNotBooksInfo}            
+                isNotBooksInfo={isNotBooksInfo}
           />
         }>
         </Route>
@@ -186,8 +186,8 @@ function App() {
         </Route>
       </Routes>
       <Footer />
-      <AddBookPopup isOpen={isAddBookPopupOpen} onClose={closeAllPopups} onAddBook={handleAddBook} />
-      <EditInfoBookPopup isOpen={isEditBookPopupOpen} onClose={closeAllPopups} currentBook={currentBook} onUpdateInfo={handleEditBook} />
+      <AddBookPopup isOpen={isAddBookPopupOpen} onClose={closeAllPopups} onAddBook={handleAddBook} onCreateArrayImages={createArrayImages} />
+      <EditInfoBookPopup isOpen={isEditBookPopupOpen} onClose={closeAllPopups} currentBook={currentBook} onUpdateInfo={handleEditBook} onCreateArrayImages={createArrayImages} />
     </>
   )
 }

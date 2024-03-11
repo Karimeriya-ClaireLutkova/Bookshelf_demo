@@ -13,7 +13,7 @@ import { placeEditInfoBook,
 import useFormValidator from '../../hooks/useFormValidator';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
-export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdateInfo }) {
+export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdateInfo, onCreateArrayImages }) {
   const imagesListStorage = localStorage.getItem("images");
   const imagesNew = JSON.parse(imagesListStorage);
   const [name, setName] = React.useState('');
@@ -39,7 +39,7 @@ export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdat
   React.useEffect(() => {
     const imagesListStorage = localStorage.getItem("images");
     if(!imagesListStorage) {
-      localStorage.setItem("images", JSON.stringify(listImages));
+      onCreateArrayImages();
     }
   }, [imagesListStorage]);
 

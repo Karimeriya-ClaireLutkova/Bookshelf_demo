@@ -13,7 +13,7 @@ import { placeNameAddBook,
 import useFormValidator from '../../hooks/useFormValidator';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
-export default function AddPlacePopup({ isOpen, onAddBook, onClose }) {
+export default function AddPlacePopup({ isOpen, onAddBook, onClose, onCreateArrayImages }) {
   const imagesListStorage = localStorage.getItem("images");
   const imagesNew = JSON.parse(imagesListStorage);
   const [name, setName] = React.useState('');
@@ -39,7 +39,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose }) {
   React.useEffect(() => {
     const imagesListStorage = localStorage.getItem("images");
     if(!imagesListStorage) {
-      localStorage.setItem("images", JSON.stringify(listImages));
+      onCreateArrayImages();
     }
   }, [imagesListStorage]);
 
