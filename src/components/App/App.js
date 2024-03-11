@@ -34,7 +34,7 @@ function App() {
       }
       const imagesListStorage = localStorage.getItem("images");
       if(!imagesListStorage) {
-        localStorage.setItem("images", JSON.stringify(imageList));
+        createArrayImages();
       }
     }
     booksCheck();
@@ -45,7 +45,7 @@ function App() {
     const booksListStorage = localStorage.getItem("booksList");
     const imagesListStorage = localStorage.getItem("images");
     if(!imagesListStorage) {
-      localStorage.setItem("images", JSON.stringify(imageList));
+      createArrayImages();
     }
     if(!booksListStorage) {
       localStorage.setItem("booksList", JSON.stringify(listBooks));
@@ -70,6 +70,7 @@ function App() {
   async function iterateArray() {
     let listImagesNew;
     listImagesNew = listImages.map((image, i) => createImage(image));
+    
     return listImagesNew;
   }
 
@@ -100,9 +101,12 @@ function App() {
     return imageNew;
   }
 
-  /*Инициализация создания массива с картинками в формате base64*/
-  imageList = iterateArray();
-
+  /*Функция создания массива с картинками в формате base64*/
+  async function createArrayImages() {
+    imageList = await iterateArray();
+    localStorage.setItem("images", JSON.stringify(imageList));
+  }
+  
   /* Функции открытия popup редактирования и добавления книги */
   function handleAddBookPopup() {
     setAddBookPopupOpen(true);
