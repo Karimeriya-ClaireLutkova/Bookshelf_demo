@@ -152,24 +152,35 @@ export default function useFormValidator() {
       } else if (value.length > 0) {
         if (placeName === placeNameAddImageDropdown && checkImage === false) {
           setValidNew(true);
-        } else if(placeName === placeEditInfoBook || (placeName === placeNameAddImageDropdown && checkImage === true)) {
-          if (currentImage === value) {
-            setErrors({...errors, [name]: "Введите значение, отличающееся от изначального."});
-            setValidNew(false);
-          } else if (currentImage !== value) {
-            if (placeName === placeNameAddImageDropdown) {
-              setValidNew(true);
+          console.log(6);
+        } else if(placeName === placeEditInfoBook || placeName === placeNameAddBook || (placeName === placeNameAddImageDropdown && checkImage === true)) {
+          console.log(7);
+          if (placeName === placeEditInfoBook || (placeName === placeNameAddImageDropdown && checkImage === true)) {
+            console.log(8);
+            if (currentImage === value) {
+              setErrors({...errors, [name]: "Введите значение, отличающееся от изначального."});
+              setValidNew(false);
+              console.log(4);
             } else {
-              if (!new RegExp(/^https?:\/\/(www\.)?([0-9a-zA-Z.-]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.?(?:jpe?g|gif|png|bmp|webp)?$/).test(value)) {
-                setErrors({...errors, [name]: "Неверный формат ссылки или изображения."});
-                setValidNew(false);
-              } else if (new RegExp(/^https?:\/\/(www\.)?([0-9a-zA-Z.-]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.?(?:jpe?g|gif|png|bmp|webp)?$/).test(value)) {
+              if (placeName === placeNameAddImageDropdown) {
                 setValidNew(true);
+                console.log(5);
               }
+            }
+          }
+          if (placeName === placeEditInfoBook || placeName === placeNameAddBook) {
+            if (!new RegExp(/^https?:\/\/(www\.)?([0-9a-zA-Z.-]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.?(?:jpeg|gif|png|bmp|webp)?$/).test(value)) {
+              setErrors({...errors, [name]: "Неверный формат ссылки или изображения."});
+              setValidNew(false);
+              console.log(1);
+            } else if (new RegExp(/^https?:\/\/(www\.)?([0-9a-zA-Z.-]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.?(?:jpeg|gif|png|bmp|webp)?$/).test(value)) {
+              setValidNew(true);
+              console.log(2);
             }
           }
         } else {
           setValidNew(true);
+          console.log(3);
         }
       }
     }

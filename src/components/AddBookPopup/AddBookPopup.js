@@ -129,16 +129,16 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose }) {
               (<div className={className}>
                 <div className="popup__container popup__container_image-dropdown">
                 <button type="button" onClick={handleCancelDropdown} className="popup__button popup__button_close popup__button_close_image-dropdown" aria-label={close + "image-dropdown"} />
-                  <ul id="image-dropdown-list" className="popup__list">
+                  <ul className="popup__list">
                     {imagesListStorage ? imagesNew.map((image, i) =>
-                      <li className="popup__list-element">
-                        <label htmlFor={image.id + "-image"}><img id={image.id} className="popup__image" src={image.image} alt={image.name} /></label>
-                        <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "-image"} value={image.image} name="image" onChange={handleChangeDropdown} />
+                      <li key={"add-list" + i}className="popup__list-element">
+                        <label key={i + "label"} htmlFor={image.id + "-image"}><img key={image.id + "im"} className="popup__image" src={image.image} alt={image.name} /></label>
+                        <input key={"input" + i}className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "-image"} value={image.image} name="image" onChange={handleChangeDropdown} />
                       </li>
                     ) : listImages.map((image, i) =>
-                        <li className="popup__list-element">
-                          <label htmlFor={image.id + "-image"}><img id={image.id} className="popup__image" src={image.image} alt={image.name} /></label>
-                          <input className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "-image"} value={image.image} name="image" onChange={handleChangeDropdown} />
+                        <li key={i + "add-list"}className="popup__list-element">
+                          <label key={"label" + i} htmlFor={image.id + "add-image"}><img key={image.id + "add-image" + image.name} className="popup__image" src={image.image} alt={image.name} /></label>
+                          <input key={i + "input"} className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "add-image"} value={image.image} name="image" onChange={handleChangeDropdown} />
                         </li>)
                     }
                   </ul>

@@ -10,12 +10,13 @@ import { listBooks, listImages } from '../../utils/constants';
 function App() {
   const booksListStorage = localStorage.getItem("booksList");
   const booksAllStorage = JSON.parse(booksListStorage);
-  const imagesListStorage = localStorage.getItem("base64");
+  const imagesListStorage = localStorage.getItem("images");
   const [booksAll, setBooksAll] = React.useState(booksAllStorage ? booksAllStorage : []);
   const [isAddBookPopupOpen, setAddBookPopupOpen] = React.useState(false);
   const [isEditBookPopupOpen, setEditBookPopupOpen] = React.useState(false);
   const [currentBook, setCurrentBook] = React.useState({});
   const [isNotBooksInfo, setNotBooksInfo] = React.useState(false);
+  let imageList;
 
   /* Проверяем и отображаем книги */
   React.useEffect(() => {
@@ -31,9 +32,9 @@ function App() {
           setNotBooksInfo(true);
         }
       }
-      const imagesListStorage = localStorage.getItem("base64");
+      const imagesListStorage = localStorage.getItem("images");
       if(!imagesListStorage) {
-        localStorage.setItem("base64", JSON.stringify(listImages));
+        localStorage.setItem("images", JSON.stringify(imageList));
       }
     }
     booksCheck();
@@ -42,14 +43,65 @@ function App() {
   /* Проверить наличие книг и картинок в локальном хранилище и добавить по необходимости */
   React.useEffect(() => {
     const booksListStorage = localStorage.getItem("booksList");
-    const imagesListStorage = localStorage.getItem("base64");
+    const imagesListStorage = localStorage.getItem("images");
     if(!imagesListStorage) {
-      localStorage.setItem("base64", JSON.stringify(listImages));
+      localStorage.setItem("images", JSON.stringify(imageList));
     }
     if(!booksListStorage) {
       localStorage.setItem("booksList", JSON.stringify(listBooks));
     }
-  }, [booksListStorage, imagesListStorage]);
+  }, [booksListStorage, imagesListStorage, imageList]);  
+
+  /* Функция для загрузки изображения */
+  function loadImage(src) {
+    return new Promise((resolve, reject) => {
+      let img = new Image();
+      img.src = src;
+      img.onload = () => {
+        resolve(img)
+      };
+      img.onerror = () => {
+        reject(new Error("Анализ изображения не прошел"))
+      }
+    })
+  }
+  
+  /*Функция по созданию массива картинок в формате base64*/
+  async function iterateArray() {
+    let listImagesNew;
+    listImagesNew = listImages.map((image, i) => createImage(image));
+    return listImagesNew;
+  }
+
+  /*Функция по преобразованию в формат base64*/
+  const toDataURL = url => fetch(url)
+  .then(response => response.blob())
+  .then(blob => new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onloadend = () => resolve(reader.result)
+    reader.onerror = reject
+    reader.readAsDataURL(blob)
+  }))
+
+  /*Функция получени src в формате base64*/
+  function handleDataUrl(src) {
+    let data;
+    toDataURL(src).then(dataUrl => data = dataUrl);
+    return data;
+  }
+
+  /*Функция обновления объекта картинки*/
+  async function createImage(item) {
+    const img = await loadImage(item.image);
+    let imageNew = {name: item.name, id: item.id};
+    let data;
+    data = handleDataUrl(img.src);
+    imageNew = {...imageNew, image: data};
+    return imageNew;
+  }
+
+  /*Инициализация создания массива с картинками в формате base64*/
+  imageList = iterateArray();
 
   /* Функции открытия popup редактирования и добавления книги */
   function handleAddBookPopup() {

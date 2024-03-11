@@ -23,7 +23,7 @@ function Books({ booksAll, onEditInfoBook, onBookDelete, isNotBooksInfo }) {
         <p className="elements__text">{notBooksInfo}</p>
       </div>
       <div className="elements__container">
-        {booksList.map((book, i) => (<BookCard key={book.id} book={book} onEditInfoBook={onEditInfoBook} onBookDelete={onBookDelete} />))}
+        {booksList.map((book, i) => (<BookCard key={book.id + "book"} book={book} onEditInfoBook={onEditInfoBook} onBookDelete={onBookDelete} />))}
       </div>
     </section>
   )
