@@ -5,19 +5,22 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import Footer from '../Footer/Footer';
 import AddBookPopup from '../AddBookPopup/AddBookPopup';
 import EditInfoBookPopup from '../EditInfoBookPopup/EditInfoBookPopup';
-import { listBooks, listImages, errorDownloadImage } from '../../utils/constants';
+import useImagesConverter from '../../hooks/useImagesConverter';
+import { listBooks } from '../../utils/constants';
 
 function App() {
   const booksListStorage = localStorage.getItem("booksList");
   const booksAllStorage = JSON.parse(booksListStorage);
   const imagesListStorage = localStorage.getItem("images");
+  const imagesStorage = JSON.parse(imagesListStorage);
   const [booksAll, setBooksAll] = React.useState(booksAllStorage ? booksAllStorage : []);
+  const [imagesNew, setImagesNew] = React.useState(imagesStorage ? imagesStorage : []);
   const [isAddBookPopupOpen, setAddBookPopupOpen] = React.useState(false);
   const [isEditBookPopupOpen, setEditBookPopupOpen] = React.useState(false);
   const [currentBook, setCurrentBook] = React.useState({});
   const [isNotBooksInfo, setNotBooksInfo] = React.useState(false);
-  let imageList;
-
+  const { imagesListNew, handleChangeConverter } = useImagesConverter();
+ 
   /* Проверяем и отображаем книги */
   React.useEffect(() => {
     const booksCheck = () => {
@@ -27,15 +30,11 @@ function App() {
         setBooksAll(listBooks);
         setNotBooksInfo(false);
       } else {
-        const arrLength = counterBooksLength();
+        const arrLength = counterArrayLength(booksAll);
         if(arrLength === 0) {
           setNotBooksInfo(true);
         }
-      }
-      const imagesListStorage = localStorage.getItem("images");
-      if(!imagesListStorage) {
-        createArrayImages();
-      }
+      }  
     }
     booksCheck();
   }, []);
@@ -43,70 +42,42 @@ function App() {
   /* Проверить наличие книг и картинок в локальном хранилище и добавить по необходимости */
   React.useEffect(() => {
     const booksListStorage = localStorage.getItem("booksList");
-    const imagesListStorage = localStorage.getItem("images");
-    if(!imagesListStorage) {
-      createArrayImages();
-    }
     if(!booksListStorage) {
       localStorage.setItem("booksList", JSON.stringify(listBooks));
     }
-  }, [booksListStorage, imagesListStorage, imageList]);  
+  }, [booksListStorage, imagesListStorage]);
 
-  /* Функция для загрузки изображения */
-  function loadImage(src) {
-    return new Promise((resolve, reject) => {
-      let img = new Image();
-      img.src = src;
-      img.onload = () => {
-        resolve(img)
-      };
-      img.onerror = () => {
-        reject(new Error(errorDownloadImage))
-      }
+  React.useEffect(() => {
+    const imagesListStorage = localStorage.getItem("images");
+    if(!imagesListStorage) {
+      handleChangeConverter();
+      local();
+    }
+  }, [local]);
+
+  /*React.useEffect(() => {
+    const imagesListStorage = localStorage.getItem("images");
+    if(!imagesListStorage) {
+      handleChange();
+      local();
+    }
+  }, []);*/
+
+  async function local() {
+    let promise = new Promise((resolve) => {
+      let imagesList = imagesListNew;
+      resolve(imagesList);
     })
-  }
-  
-  /*Функция по созданию массива картинок в формате base64*/
-  async function iterateArray() {
-    let listImagesNew;
-    listImagesNew = listImages.map((image, i) => createImage(image));
-    
-    return listImagesNew;
-  }
+    let images = await promise;
+    let arrayLength;
+    arrayLength = counterArrayLength(images);
+    if(arrayLength !== 0) {
+      console.log(arrayLength, imagesListNew);
+      setImagesNew(images);
+      localStorage.setItem("images", JSON.stringify(images));
+    }
+  };
 
-  /*Функция по преобразованию в формат base64*/
-  const toDataURL = url => fetch(url)
-  .then(response => response.blob())
-  .then(blob => new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onloadend = () => resolve(reader.result)
-    reader.onerror = reject
-    reader.readAsDataURL(blob)
-  }))
-
-  /*Функция получени src в формате base64*/
-  function handleDataUrl(src) {
-    let data;
-    toDataURL(src).then(dataUrl => data = dataUrl);
-    return data;
-  }
-
-  /*Функция обновления объекта картинки*/
-  async function createImage(item) {
-    const img = await loadImage(item.image);
-    let imageNew = {name: item.name, id: item.id};
-    let data;
-    data = handleDataUrl(img.src);
-    imageNew = {...imageNew, image: data};
-    return imageNew;
-  }
-
-  /*Функция создания массива с картинками в формате base64*/
-  async function createArrayImages() {
-    imageList = await iterateArray();
-    localStorage.setItem("images", JSON.stringify(imageList));
-  }
-  
   /* Функции открытия popup редактирования и добавления книги */
   function handleAddBookPopup() {
     setAddBookPopupOpen(true);
@@ -126,9 +97,9 @@ function App() {
   }
 
   /* Функция для проверки количества книг в массиве */
-  function counterBooksLength() {
+  function counterArrayLength(array) {
     let arrLength = 0;
-    booksAll.forEach(function() {
+    array.forEach(function() {
       arrLength++
     });
     return arrLength;
@@ -136,7 +107,7 @@ function App() {
 
   /* Функция добавления книги */
   function handleAddBook({name, author, image}) {
-    const arrLength = counterBooksLength();
+    const arrLength = counterArrayLength(booksAll);
     const bookNew = {
       name: name,
       author: author,
@@ -153,7 +124,7 @@ function App() {
 
   /* Функция удаления книги */
   function handleBookDelete(book) {
-    const arrayLength = counterBooksLength();
+    const arrayLength = counterArrayLength(booksAll);
     const booksNewList = booksAll.filter((item) => item.id !== book.id);
     setBooksAll(booksNewList);
     if ((arrayLength - 1) === 0) {
@@ -186,8 +157,8 @@ function App() {
         </Route>
       </Routes>
       <Footer />
-      <AddBookPopup isOpen={isAddBookPopupOpen} onClose={closeAllPopups} onAddBook={handleAddBook} onCreateArrayImages={createArrayImages} />
-      <EditInfoBookPopup isOpen={isEditBookPopupOpen} onClose={closeAllPopups} currentBook={currentBook} onUpdateInfo={handleEditBook} onCreateArrayImages={createArrayImages} />
+      <AddBookPopup imagesNew={imagesNew} isOpen={isAddBookPopupOpen} onClose={closeAllPopups} onAddBook={handleAddBook} />
+      <EditInfoBookPopup imagesNew={imagesNew} isOpen={isEditBookPopupOpen} onClose={closeAllPopups} currentBook={currentBook} onUpdateInfo={handleEditBook} />
     </>
   )
 }

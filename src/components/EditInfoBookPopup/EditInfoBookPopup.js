@@ -13,9 +13,7 @@ import { placeEditInfoBook,
 import useFormValidator from '../../hooks/useFormValidator';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
-export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdateInfo, onCreateArrayImages }) {
-  const imagesListStorage = localStorage.getItem("images");
-  const imagesNew = JSON.parse(imagesListStorage);
+export default function EditProfilePopup({ imagesNew, currentBook, isOpen, onClose, onUpdateInfo }) {
   const [name, setName] = React.useState('');
   const [author, setAuthor] = React.useState('');
   const [image, setImage] = React.useState('');
@@ -24,7 +22,7 @@ export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdat
   const [isOpenDropdown, setOpenDropdown] = React.useState(false);
   const className = `popup popup__list-example ${isOpenDropdown? "popup_opened" : ""}`;
   const element = document.querySelector("#book-image");
-
+  const imagesListStorage = localStorage.getItem("images");
   /* Внесение данных из карточки книги в поля при открыти */
   React.useEffect(() => {
     if (isOpen) {
@@ -34,14 +32,6 @@ export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdat
       setImage(currentBook.image);
     };
   }, [isOpen, currentBook]);
-
-  /* Отслеживание наличия картинок в локальном хранилище */
-  React.useEffect(() => {
-    const imagesListStorage = localStorage.getItem("images");
-    if(!imagesListStorage) {
-      onCreateArrayImages();
-    }
-  }, [imagesListStorage]);
 
   /* Функция проверки вводимых данных через хук */
   function handleChangeInput(evt, isImageDropdown) {

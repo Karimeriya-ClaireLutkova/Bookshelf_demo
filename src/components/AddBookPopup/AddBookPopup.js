@@ -11,16 +11,18 @@ import { placeNameAddBook,
          buttonPopupBookAdd
         } from '../../utils/constants';
 import useFormValidator from '../../hooks/useFormValidator';
+import useImagesConverter from '../../hooks/useImagesConverter';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
-export default function AddPlacePopup({ isOpen, onAddBook, onClose, onCreateArrayImages }) {
+export default function AddPlacePopup({ imagesNew, isOpen, onAddBook, onClose }) {
   const imagesListStorage = localStorage.getItem("images");
-  const imagesNew = JSON.parse(imagesListStorage);
+  const imagesStorage = JSON.parse(imagesListStorage);
   const [name, setName] = React.useState('');
   const [author, setAuthor] = React.useState('');
   const [image, setImage] = React.useState('');
   const [imageCurrent, setImageCurrent] = React.useState('');
   const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
+  const { decodeBase64Image } = useImagesConverter();
   const [isOpenDropdown, setOpenDropdown] = React.useState(false);
   const className = `popup popup__list-example ${isOpenDropdown? "popup_opened" : ""}`;
   const element = document.querySelector("#book-image");
@@ -35,13 +37,12 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose, onCreateArra
     };
   }, [isOpen]);
 
-  /* Отслеживание наличия картинок в локальном хранилище */
   React.useEffect(() => {
-    const imagesListStorage = localStorage.getItem("images");
-    if(!imagesListStorage) {
-      onCreateArrayImages();
-    }
-  }, [imagesListStorage]);
+    if (imagesListStorage) {
+      decodeBase64Image(imagesStorage);
+    };
+  }, []);
+  
 
   /* Функция проверки вводимых данных через хук */
   function handleChangeInput(evt, isImageDropdown) {
