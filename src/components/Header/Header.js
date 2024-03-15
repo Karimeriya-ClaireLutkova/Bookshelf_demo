@@ -15,7 +15,7 @@ function Header() {
       <p className="header__subtitle">{content}<a href="#content1" className="header__link header__link_transition">{details}&rarr;</a></p>
       <div className="header__main-illustration">
       </div>
-      <div className="header__picture-animated fadeinout">
+      <div className="header__picture">
       </div>
     </header>
   )
