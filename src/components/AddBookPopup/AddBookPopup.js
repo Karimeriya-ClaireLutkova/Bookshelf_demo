@@ -14,7 +14,7 @@ import useFormValidator from '../../hooks/useFormValidator';
 import useImagesConverter from '../../hooks/useImagesConverter';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
-export default function AddPlacePopup({ imagesNew, isOpen, onAddBook, onClose }) {
+export default function AddPlacePopup({ isOpen, onAddBook, onClose }) {
   const imagesListStorage = localStorage.getItem("images");
   const imagesStorage = JSON.parse(imagesListStorage);
   const [name, setName] = React.useState('');
@@ -22,7 +22,6 @@ export default function AddPlacePopup({ imagesNew, isOpen, onAddBook, onClose })
   const [image, setImage] = React.useState('');
   const [imageCurrent, setImageCurrent] = React.useState('');
   const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
-  const { decodeBase64Image } = useImagesConverter();
   const [isOpenDropdown, setOpenDropdown] = React.useState(false);
   const className = `popup popup__list-example ${isOpenDropdown? "popup_opened" : ""}`;
   const element = document.querySelector("#book-image");
@@ -36,13 +35,6 @@ export default function AddPlacePopup({ imagesNew, isOpen, onAddBook, onClose })
       resetForm();
     };
   }, [isOpen]);
-
-  React.useEffect(() => {
-    if (imagesListStorage) {
-      decodeBase64Image(imagesStorage);
-    };
-  }, []);
-  
 
   /* Функция проверки вводимых данных через хук */
   function handleChangeInput(evt, isImageDropdown) {
@@ -141,7 +133,7 @@ export default function AddPlacePopup({ imagesNew, isOpen, onAddBook, onClose })
                 <div className="popup__container popup__container_image-dropdown">
                 <button type="button" onClick={handleCancelDropdown} className="popup__button popup__button_close popup__button_close_image-dropdown" aria-label={close + "image-dropdown"} />
                   <ul className="popup__list">
-                    {imagesListStorage ? imagesNew.map((image, i) =>
+                    {imagesListStorage ? imagesStorage.map((image, i) =>
                       <li key={"add-list" + i}className="popup__list-element">
                         <label key={i + "label"} htmlFor={image.id + "-image"}><img key={image.id + "im"} className="popup__image" src={image.image} alt={image.name} /></label>
                         <input key={"input" + i}className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "-image"} value={image.image} name="image" onChange={handleChangeDropdown} />

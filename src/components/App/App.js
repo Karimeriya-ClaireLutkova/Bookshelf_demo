@@ -11,15 +11,12 @@ import { listBooks } from '../../utils/constants';
 function App() {
   const booksListStorage = localStorage.getItem("booksList");
   const booksAllStorage = JSON.parse(booksListStorage);
-  const imagesListStorage = localStorage.getItem("images");
-  const imagesStorage = JSON.parse(imagesListStorage);
   const [booksAll, setBooksAll] = React.useState(booksAllStorage ? booksAllStorage : []);
-  const [imagesNew, setImagesNew] = React.useState(imagesStorage ? imagesStorage : []);
   const [isAddBookPopupOpen, setAddBookPopupOpen] = React.useState(false);
   const [isEditBookPopupOpen, setEditBookPopupOpen] = React.useState(false);
   const [currentBook, setCurrentBook] = React.useState({});
   const [isNotBooksInfo, setNotBooksInfo] = React.useState(false);
-  const { imagesListNew, handleChangeConverter } = useImagesConverter();
+  const { list, handleChangeConverter } = useImagesConverter();
  
   /* Проверяем и отображаем книги */
   React.useEffect(() => {
@@ -39,44 +36,19 @@ function App() {
     booksCheck();
   }, []);
 
-  /* Проверить наличие книг и картинок в локальном хранилище и добавить по необходимости */
-  React.useEffect(() => {
-    const booksListStorage = localStorage.getItem("booksList");
-    if(!booksListStorage) {
-      localStorage.setItem("booksList", JSON.stringify(listBooks));
-    }
-  }, [booksListStorage, imagesListStorage]);
-
   React.useEffect(() => {
     const imagesListStorage = localStorage.getItem("images");
     if(!imagesListStorage) {
       handleChangeConverter();
-      local();
-    }
-  }, [local]);
+    }  
+  }, []);
 
-  /*React.useEffect(() => {
-    const imagesListStorage = localStorage.getItem("images");
-    if(!imagesListStorage) {
-      handleChange();
-      local();
-    }
-  }, []);*/
-
-  async function local() {
-    let promise = new Promise((resolve) => {
-      let imagesList = imagesListNew;
-      resolve(imagesList);
-    })
-    let images = await promise;
-    let arrayLength;
-    arrayLength = counterArrayLength(images);
-    if(arrayLength !== 0) {
-      console.log(arrayLength, imagesListNew);
-      setImagesNew(images);
-      localStorage.setItem("images", JSON.stringify(images));
-    }
-  };
+  React.useEffect(() => {
+    const arrLength = counterArrayLength(list);
+    if(arrLength !== 0) {
+      localStorage.setItem("images", JSON.stringify(list));
+    } 
+  }, [list]);
 
   /* Функции открытия popup редактирования и добавления книги */
   function handleAddBookPopup() {
@@ -157,8 +129,8 @@ function App() {
         </Route>
       </Routes>
       <Footer />
-      <AddBookPopup imagesNew={imagesNew} isOpen={isAddBookPopupOpen} onClose={closeAllPopups} onAddBook={handleAddBook} />
-      <EditInfoBookPopup imagesNew={imagesNew} isOpen={isEditBookPopupOpen} onClose={closeAllPopups} currentBook={currentBook} onUpdateInfo={handleEditBook} />
+      <AddBookPopup isOpen={isAddBookPopupOpen} onClose={closeAllPopups} onAddBook={handleAddBook} />
+      <EditInfoBookPopup isOpen={isEditBookPopupOpen} onClose={closeAllPopups} currentBook={currentBook} onUpdateInfo={handleEditBook} />
     </>
   )
 }
