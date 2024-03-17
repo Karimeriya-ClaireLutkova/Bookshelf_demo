@@ -2,37 +2,34 @@ import React from 'react';
 import { errorDownloadImage, listImages } from '../utils/constants';
 
 export default function useImagesConverter() {
-  const [imagesListNew, setImagesListNew] = React.useState([]);
   const [list, setList] = React.useState([]);
+  const [listNew, setListNew] = React.useState([]);
 
   const handleChangeConverter = () => {
     iterateArray(listImages);
-    /*const handleImagesNew = () => {
-      
-    };
-    handleImagesNew();*/
   };
-
   /*Функция по созданию массива картинок в формате base64*/
   function iterateArray(array) {
-    array.map((image, i) => createImage(image));
+    array.map((image, i) => createImages(image)); 
   }
 
-    /*Функция обновления объекта картинки*/
-  async function createImage(item) {
+  /*Функция обновления объекта картинки*/
+  function createImages(item) {
     let promise = new Promise((resolve) => {
-      let img = loadImage(item.image);
-      let url = handleDataUrl(img.src);
-      resolve(url);
+      let img = loadImage(item.image); 
+      resolve(img);
     })
     promise.then((data) => {
-      let image = {name: item.name, id: item.id, image: data};
-      list.push(image);
-    });
-      /*const handleImagesSrc = () => {
-        
-      };
-      handleImagesSrc();*/ 
+      handleDataUrl(data).then(elem => {
+        let image = {name: item.name, id: item.id, image: elem.src};
+        listNew.push(image);
+        return listNew;
+      })
+      .then(dataList => {
+        setList(dataList);
+        setListNew([]);
+      })
+    })
   }
   /* Функция для загрузки изображения */
   function loadImage(src) {
@@ -47,45 +44,32 @@ export default function useImagesConverter() {
       }
     })
   }
+
+  function handleDataUrl(item) {
+    return new Promise((resolve) => {
+      let url = getBase64Image(item); 
+      resolve(url);
+    }) 
+  }
   
    /*Функция получени src в формате base64*/
-   async function handleDataUrl(src) {
-    let promise = new Promise((resolve) => {
-      let data = toDataURL(src).then(dataUrl => dataUrl);
-      resolve(data);
-    })
-    let url = await promise.then(item => item);
-    return url;
+  function getBase64Image(img) {
+    const canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    const dataURL = canvas.toDataURL("image/jpeg");
+    img.src = dataURL;
+    return img;
   }
 
-  /*Функция по преобразованию в формат base64*/
-  const toDataURL = url => fetch(url)
-  .then(response => response.blob())
-  .then(blob => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(blob);
-  }))
-
-  const decodeBase64Image = (dataString) => {
-    const matches = dataString.match(/^data:([A-Za-z-+/]+);base64,(.+)$/),
-      response = {};
-    if (matches.length !== 3) {
-      return new Error('Invalid input string');
-    }
-    response.type = matches[1];
-    response.data = Buffer.from(matches[2], 'base64');
-    console.log(response);
-    return response;
-  }
-
-  const resetForm = React.useCallback(
+  const resetFormConverter = React.useCallback(
     (newList = []) => {
       setList(newList);
     },
     [setList]
   );
 
-  return { handleChangeConverter, list, decodeBase64Image, resetForm  };
+  return { handleChangeConverter, list, resetFormConverter };
 };

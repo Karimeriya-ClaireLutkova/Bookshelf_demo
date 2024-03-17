@@ -257,4 +257,4 @@ export const listImages = [
     image: car,
     id: "car10",
   }
-  ];
+];

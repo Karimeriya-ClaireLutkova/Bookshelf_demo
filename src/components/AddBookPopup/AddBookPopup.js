@@ -22,6 +22,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose }) {
   const [image, setImage] = React.useState('');
   const [imageCurrent, setImageCurrent] = React.useState('');
   const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
+  const { list, handleChangeConverter } = useImagesConverter();
   const [isOpenDropdown, setOpenDropdown] = React.useState(false);
   const className = `popup popup__list-example ${isOpenDropdown? "popup_opened" : ""}`;
   const element = document.querySelector("#book-image");
@@ -33,8 +34,37 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose }) {
       setAuthor('');
       setImage('');
       resetForm();
-    };
+      const imagesListStorage = localStorage.getItem("images");
+      let array = list;
+      let arrLength = counterArrayLength(array);
+      if(!imagesListStorage && arrLength === 0) {
+        handleChangeConverter();
+        console.log(16);
+      } else if (!imagesListStorage && arrLength !== 0) {
+        localStorage.setItem("images", JSON.stringify(list));
+      }
+    }
   }, [isOpen]);
+  
+  React.useEffect(() => {
+    if (isOpen) {
+      let array = list;
+      let arrLength = counterArrayLength(array);
+      if(arrLength !== 0) {
+        localStorage.setItem("images", JSON.stringify(list));
+        console.log(12);
+      }
+    }
+    
+  }, [list]);
+
+  function counterArrayLength(array) {
+    let arrLength = 0;
+    array.forEach(function() {
+      arrLength++
+    });
+    return arrLength;
+  }
 
   /* Функция проверки вводимых данных через хук */
   function handleChangeInput(evt, isImageDropdown) {
@@ -51,7 +81,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose }) {
   /* Функция открытия popup для выбора картинки из локального хранилища */
   function handleClickDropdown() {
     setImage('');
-    setImageCurrent('');
+    setImageCurrent(''); 
     setOpenDropdown(true);
   }
 

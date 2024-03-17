@@ -11,42 +11,56 @@ import { listBooks } from '../../utils/constants';
 function App() {
   const booksListStorage = localStorage.getItem("booksList");
   const booksAllStorage = JSON.parse(booksListStorage);
+  const imagesListStorage = localStorage.getItem("images");
   const [booksAll, setBooksAll] = React.useState(booksAllStorage ? booksAllStorage : []);
   const [isAddBookPopupOpen, setAddBookPopupOpen] = React.useState(false);
   const [isEditBookPopupOpen, setEditBookPopupOpen] = React.useState(false);
   const [currentBook, setCurrentBook] = React.useState({});
   const [isNotBooksInfo, setNotBooksInfo] = React.useState(false);
-  const { list, handleChangeConverter } = useImagesConverter();
- 
+  const { list, handleChangeConverter, resetFormConverter } = useImagesConverter();
+
   /* Проверяем и отображаем книги */
   React.useEffect(() => {
     const booksCheck = () => {
       const booksListStorage = localStorage.getItem("booksList");
-      if(!booksListStorage) {
+      const arrLength = counterArrayLength(booksAll);
+      if(!booksListStorage && arrLength !== 0) {
         localStorage.setItem("booksList", JSON.stringify(listBooks));
         setBooksAll(listBooks);
         setNotBooksInfo(false);
-      } else {
-        const arrLength = counterArrayLength(booksAll);
-        if(arrLength === 0) {
-          setNotBooksInfo(true);
-        }
-      }  
+      } else if(!booksListStorage && arrLength === 0) {
+        setNotBooksInfo(true);
+        localStorage.setItem("booksList", JSON.stringify(listBooks));
+        setBooksAll(listBooks);
+      } else if(booksListStorage && arrLength !== 0) {
+        setNotBooksInfo(false);
+      }
     }
     booksCheck();
-  }, []);
+  }, [booksListStorage, listBooks]);
 
   React.useEffect(() => {
     const imagesListStorage = localStorage.getItem("images");
     if(!imagesListStorage) {
       handleChangeConverter();
-    }  
+      localStorage.setItem("images", JSON.stringify(list));
+      console.log(80);
+    } else if(imagesListStorage) {
+      resetFormConverter();
+      console.log(81);
+    }
   }, []);
 
   React.useEffect(() => {
-    const arrLength = counterArrayLength(list);
+    let array = list;
+    let arrLength = counterArrayLength(array);
     if(arrLength !== 0) {
       localStorage.setItem("images", JSON.stringify(list));
+      const imagesListStorage = localStorage.getItem("images");
+      if(imagesListStorage) {
+        console.log(82);
+        resetFormConverter();
+      }
     } 
   }, [list]);
 
@@ -57,18 +71,24 @@ function App() {
 
   function handleEditInfoBookPopup(book) {
     setEditBookPopupOpen(true);
+    const booksListStorage = localStorage.getItem("booksList");
+    if(!booksListStorage) {
+      localStorage.setItem("booksList", JSON.stringify(listBooks))    }
     setCurrentBook(book);
   }
 
   /* Функция редактирования книги */
   function handleEditBook(book) {
+    const booksListStorage = localStorage.getItem("booksList");
     let books = booksAll.map(item => item.id === book.id ? book : item);
     setBooksAll(books);
-    localStorage.setItem("booksList", JSON.stringify(books));
+    if(!booksListStorage) {
+      localStorage.setItem("booksList", JSON.stringify(books));
+    }
     closeAllPopups();
   }
 
-  /* Функция для проверки количества книг в массиве */
+  /* Функция для проверки количества элементов в массиве */
   function counterArrayLength(array) {
     let arrLength = 0;
     array.forEach(function() {
