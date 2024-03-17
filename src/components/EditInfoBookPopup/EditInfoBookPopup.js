@@ -11,18 +11,21 @@ import { placeEditInfoBook,
          placeholderBookAdd
         } from '../../utils/constants';
 import useFormValidator from '../../hooks/useFormValidator';
+import useImagesConverter from '../../hooks/useImagesConverter';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
-export default function EditProfilePopup({ imagesNew, currentBook, isOpen, onClose, onUpdateInfo }) {
+export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdateInfo }) {
   const [name, setName] = React.useState('');
   const [author, setAuthor] = React.useState('');
   const [image, setImage] = React.useState('');
   const [imageCurrent, setImageCurrent] = React.useState('');
   const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
+  const { list, handleChangeConverter } = useImagesConverter();
   const [isOpenDropdown, setOpenDropdown] = React.useState(false);
   const className = `popup popup__list-example ${isOpenDropdown? "popup_opened" : ""}`;
   const element = document.querySelector("#book-image");
   const imagesListStorage = localStorage.getItem("images");
+  const imagesStorage = JSON.parse(imagesListStorage);
   /* Внесение данных из карточки книги в поля при открыти */
   React.useEffect(() => {
     if (isOpen) {
@@ -30,8 +33,37 @@ export default function EditProfilePopup({ imagesNew, currentBook, isOpen, onClo
       setName(currentBook.name);
       setAuthor(currentBook.author);
       setImage(currentBook.image);
+      const imagesListStorage = localStorage.getItem("images");
+      let array = list;
+      let arrLength = counterArrayLength(array);
+      if(!imagesListStorage && arrLength === 0) {
+        handleChangeConverter();
+        console.log(90);
+      } else if (!imagesListStorage && arrLength !== 0) {
+        localStorage.setItem("images", JSON.stringify(list));
+      }
     };
   }, [isOpen, currentBook]);
+
+  React.useEffect(() => {
+    if (isOpen) {
+      let array = list;
+      let arrLength = counterArrayLength(array);
+      if(arrLength !== 0) {
+        localStorage.setItem("images", JSON.stringify(list));
+        console.log(12);
+      }
+    }
+    
+  }, [list]);
+
+  function counterArrayLength(array) {
+    let arrLength = 0;
+    array.forEach(function() {
+      arrLength++
+    });
+    return arrLength;
+  }
 
   /* Функция проверки вводимых данных через хук */
   function handleChangeInput(evt, isImageDropdown) {
@@ -137,7 +169,7 @@ export default function EditProfilePopup({ imagesNew, currentBook, isOpen, onClo
                 <div className="popup__container popup__container_image-dropdown">
                 <button type="button" onClick={handleCancelDropdown} className="popup__button popup__button_close popup__button_close_image-dropdown" aria-label={close + "image-dropdown"} />
                   <ul className="popup__list">
-                    {imagesListStorage ? imagesNew.map((image, i) =>
+                    {imagesListStorage ? imagesStorage.map((image, i) =>
                       <li key={"li-" + i} className="popup__list-element">
                         <label key={"label-edit" + i} htmlFor={image.id + "-image"}><img key={image.id + "edit-img"} className="popup__image" src={image.image} alt={image.name} /></label>
                         <input key={"inpt" + i} className="popup__input popup__input_type_image-dropdown" type="radio" id={image.id + "-image"} value={image.image} name="image" onChange={handleChangeDropdown} />

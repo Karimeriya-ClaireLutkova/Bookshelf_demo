@@ -11,7 +11,6 @@ import { listBooks } from '../../utils/constants';
 function App() {
   const booksListStorage = localStorage.getItem("booksList");
   const booksAllStorage = JSON.parse(booksListStorage);
-  const imagesListStorage = localStorage.getItem("images");
   const [booksAll, setBooksAll] = React.useState(booksAllStorage ? booksAllStorage : []);
   const [isAddBookPopupOpen, setAddBookPopupOpen] = React.useState(false);
   const [isEditBookPopupOpen, setEditBookPopupOpen] = React.useState(false);
