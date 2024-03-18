@@ -27,7 +27,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose }) {
   const className = `popup popup__list-example ${isOpenDropdown? "popup_opened" : ""}`;
   const element = document.querySelector("#book-image");
 
-  /* Очистка данных при открыти */
+  /* Очистка данных при открытии и проверка наличия картинок в локальном хранилище */
   React.useEffect(() => {
     if (isOpen) {
       setName('');

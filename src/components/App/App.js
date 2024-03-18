@@ -6,7 +6,7 @@ import Footer from '../Footer/Footer';
 import AddBookPopup from '../AddBookPopup/AddBookPopup';
 import EditInfoBookPopup from '../EditInfoBookPopup/EditInfoBookPopup';
 import useImagesConverter from '../../hooks/useImagesConverter';
-import { listBooks, listImages } from '../../utils/constants';
+import { listBooks } from '../../utils/constants';
 
 function App() {
   const booksListStorage = localStorage.getItem("booksList");
@@ -18,7 +18,7 @@ function App() {
   const [isEditBookPopupOpen, setEditBookPopupOpen] = React.useState(false);
   const [currentBook, setCurrentBook] = React.useState({});
   const [isNotBooksInfo, setNotBooksInfo] = React.useState(false);
-  const { list, handleChangeConverter, resetFormConverter } = useImagesConverter();
+  const { handleChangeConverter } = useImagesConverter();
 
   /* Проверяем и отображаем книги */
   React.useEffect(() => {
@@ -45,7 +45,6 @@ function App() {
     if(!imagesListStorage) {
       handleChangeConverter();
       localStorage.setItem("images", JSON.stringify([]));
-      console.log(80);
     }
   }, [imagesStorage]);
 
@@ -58,7 +57,8 @@ function App() {
     setEditBookPopupOpen(true);
     const booksListStorage = localStorage.getItem("booksList");
     if(!booksListStorage) {
-      localStorage.setItem("booksList", JSON.stringify(listBooks))    }
+      localStorage.setItem("booksList", JSON.stringify(listBooks))
+    }
     setCurrentBook(book);
   }
 

@@ -26,6 +26,7 @@ export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdat
   const element = document.querySelector("#book-image");
   const imagesListStorage = localStorage.getItem("images");
   const imagesStorage = JSON.parse(imagesListStorage);
+  
   /* Внесение данных из карточки книги в поля при открыти */
   React.useEffect(() => {
     if (isOpen) {
@@ -36,11 +37,11 @@ export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdat
       const imagesListStorage = localStorage.getItem("images");
       if(!imagesListStorage) {
         handleChangeConverter();
-        console.log(90);
+        localStorage.setItem("images", JSON.stringify([]));
       }
     };
   }, [isOpen, currentBook, imagesListStorage]);
-  
+
   /* Функция проверки вводимых данных через хук */
   function handleChangeInput(evt, isImageDropdown) {
     handleChange({event: evt, placeName: isImageDropdown ? placeNameAddImageDropdown : placeEditInfoBook, currentBook});

@@ -178,19 +178,14 @@ export default function useFormValidator() {
       } else if (value.length > 0) {
         if (placeName === placeNameAddImageDropdown && checkImage === false) {
           setValidNew(true);
-          console.log(6);
         } else if(placeName === placeEditInfoBook || placeName === placeNameAddBook || (placeName === placeNameAddImageDropdown && checkImage === true)) {
-          console.log(7);
           if (placeName === placeEditInfoBook || (placeName === placeNameAddImageDropdown && checkImage === true)) {
-            console.log(8);
             if (currentImage === value) {
               setErrors({...errors, [name]: warningImageIdentical});
               setValidNew(false);
-              console.log(4);
             } else {
               if (placeName === placeNameAddImageDropdown) {
                 setValidNew(true);
-                console.log(5);
               }
             }
           }
@@ -198,15 +193,12 @@ export default function useFormValidator() {
             if (!new RegExp(/^https?:\/\/(www\.)?([0-9a-zA-Z.-]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.?(?:jpeg|gif|png|bmp|webp)?$/).test(value)) {
               setErrors({...errors, [name]: warningImageFormat});
               setValidNew(false);
-              console.log(1);
             } else if (new RegExp(/^https?:\/\/(www\.)?([0-9a-zA-Z.-]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.?(?:jpeg|gif|png|bmp|webp)?$/).test(value)) {
               setValidNew(true);
-              console.log(2);
             }
           }
         } else {
           setValidNew(true);
-          console.log(3);
         }
       }
     }

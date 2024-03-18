@@ -5,9 +5,10 @@ export default function useImagesConverter() {
   const handleChangeConverter = () => {
     iterateArray(listImages);
   };
-  /*Функция по созданию массива картинок в формате base64*/
+
+  /*Функция по перебору массива картинок для изменения формата в base64*/
   function iterateArray(array) {
-    array.map((image, i) => createImages(image)); 
+    array.map((image, i) => createImages(image));
   }
 
   /*Функция обновления объекта картинки*/
@@ -21,8 +22,15 @@ export default function useImagesConverter() {
         let image = {name: item.name, id: item.id, image: elem.src};
         const imagesListStorage = localStorage.getItem("images");
         const imagesStorage = JSON.parse(imagesListStorage);
-        imagesStorage.push(image);
-        localStorage.setItem("images", JSON.stringify(imagesStorage));
+        if(imagesListStorage) {
+          imagesStorage.push(image);
+          localStorage.setItem("images", JSON.stringify(imagesStorage));
+        } else {
+          localStorage.setItem("images", JSON.stringify([]));
+          const imagesStorage = JSON.parse(imagesListStorage);
+          imagesStorage.push(image);
+          localStorage.setItem("images", JSON.stringify(imagesStorage));
+        }
       })
     })
   }
@@ -42,12 +50,12 @@ export default function useImagesConverter() {
 
   function handleDataUrl(item) {
     return new Promise((resolve) => {
-      let url = getBase64Image(item); 
+      let url = getBase64Image(item);
       resolve(url);
-    }) 
+    })
   }
-  
-   /*Функция получени src в формате base64*/
+
+   /*Функция получения src в формате base64*/
   function getBase64Image(img) {
     const canvas = document.createElement("canvas");
     canvas.width = widthImages;
