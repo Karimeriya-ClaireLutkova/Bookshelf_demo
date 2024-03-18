@@ -1,5 +1,5 @@
 import React from 'react';
-import { errorDownloadImage, listImages } from '../utils/constants';
+import { errorDownloadImage, listImages, widthImages, heightImages } from '../utils/constants';
 
 export default function useImagesConverter() {
   const [list, setList] = React.useState([]);
@@ -55,8 +55,8 @@ export default function useImagesConverter() {
    /*Функция получени src в формате base64*/
   function getBase64Image(img) {
     const canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
+    canvas.width = widthImages;
+    canvas.height = heightImages;
     const ctx = canvas.getContext("2d");
     ctx.drawImage(img, 0, 0);
     const dataURL = canvas.toDataURL("image/jpeg");

@@ -83,6 +83,8 @@ export const altLogoHeader = "Логотип Bookshelf";
 export const titleMissingPage = "404";
 export const subtitleMissingPage = "Страница не найдена";
 export const buttonMissingPage = "Назад";
+export const widthImages = "145";
+export const heightImages = "205";
 
 export const listBooks = [
 {

@@ -6,7 +6,7 @@ import Footer from '../Footer/Footer';
 import AddBookPopup from '../AddBookPopup/AddBookPopup';
 import EditInfoBookPopup from '../EditInfoBookPopup/EditInfoBookPopup';
 import useImagesConverter from '../../hooks/useImagesConverter';
-import { listBooks } from '../../utils/constants';
+import { listBooks, listImages } from '../../utils/constants';
 
 function App() {
   const booksListStorage = localStorage.getItem("booksList");
@@ -40,25 +40,48 @@ function App() {
 
   React.useEffect(() => {
     const imagesListStorage = localStorage.getItem("images");
+    const imagesStorage = JSON.parse(imagesListStorage);
+    let arrayNew = list;
+    let arrayInitial = listImages;
+    let arrLengthNew = counterArrayLength(arrayNew);
+    let arrLengthInitial = counterArrayLength(arrayInitial);
     if(!imagesListStorage) {
       handleChangeConverter();
       localStorage.setItem("images", JSON.stringify(list));
       console.log(80);
     } else if(imagesListStorage) {
-      resetFormConverter();
-      console.log(81);
+      let arrLengthStorage = counterArrayLength(imagesStorage);
+      if(arrLengthNew === arrLengthInitial) {
+        if(arrLengthStorage === arrLengthNew) {
+          resetFormConverter();
+          console.log(81);
+        } else {
+          localStorage.setItem("images", JSON.stringify(list));
+          console.log(83);
+        }
+      }  
     }
-  }, []);
+  }, [list]);
 
   React.useEffect(() => {
-    let array = list;
-    let arrLength = counterArrayLength(array);
-    if(arrLength !== 0) {
+    const imagesListStorage = localStorage.getItem("images");
+    const imagesStorage = JSON.parse(imagesListStorage);
+    let arrayNew = list;
+    let arrayInitial = listImages;
+    let arrLengthNew = counterArrayLength(arrayNew);
+    let arrLengthInitial = counterArrayLength(arrayInitial);
+    if(arrLengthNew !== 0 && arrLengthNew === arrLengthInitial) {
       localStorage.setItem("images", JSON.stringify(list));
       const imagesListStorage = localStorage.getItem("images");
       if(imagesListStorage) {
-        console.log(82);
-        resetFormConverter();
+        let arrLengthStorage = counterArrayLength(imagesStorage);
+        if(arrLengthStorage === arrLengthNew) {
+          resetFormConverter();
+          console.log(90);
+        } else {
+          localStorage.setItem("images", JSON.stringify(list));
+          console.log(93);
+        }
       }
     } 
   }, [list]);
