@@ -1,9 +1,6 @@
-import React from 'react';
 import { errorDownloadImage, listImages, widthImages, heightImages } from '../utils/constants';
 
 export default function useImagesConverter() {
-  const [list, setList] = React.useState([]);
-  const [listNew, setListNew] = React.useState([]);
 
   const handleChangeConverter = () => {
     iterateArray(listImages);
@@ -22,12 +19,10 @@ export default function useImagesConverter() {
     promise.then((data) => {
       handleDataUrl(data).then(elem => {
         let image = {name: item.name, id: item.id, image: elem.src};
-        listNew.push(image);
-        return listNew;
-      })
-      .then(dataList => {
-        setList(dataList);
-        setListNew([]);
+        const imagesListStorage = localStorage.getItem("images");
+        const imagesStorage = JSON.parse(imagesListStorage);
+        imagesStorage.push(image);
+        localStorage.setItem("images", JSON.stringify(imagesStorage));
       })
     })
   }
@@ -64,12 +59,5 @@ export default function useImagesConverter() {
     return img;
   }
 
-  const resetFormConverter = React.useCallback(
-    (newList = []) => {
-      setList(newList);
-    },
-    [setList]
-  );
-
-  return { handleChangeConverter, list, resetFormConverter };
+  return { handleChangeConverter };
 };

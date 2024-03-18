@@ -11,6 +11,8 @@ import { listBooks, listImages } from '../../utils/constants';
 function App() {
   const booksListStorage = localStorage.getItem("booksList");
   const booksAllStorage = JSON.parse(booksListStorage);
+  const imagesListStorage = localStorage.getItem("images");
+  const imagesStorage = JSON.parse(imagesListStorage);
   const [booksAll, setBooksAll] = React.useState(booksAllStorage ? booksAllStorage : []);
   const [isAddBookPopupOpen, setAddBookPopupOpen] = React.useState(false);
   const [isEditBookPopupOpen, setEditBookPopupOpen] = React.useState(false);
@@ -40,51 +42,12 @@ function App() {
 
   React.useEffect(() => {
     const imagesListStorage = localStorage.getItem("images");
-    const imagesStorage = JSON.parse(imagesListStorage);
-    let arrayNew = list;
-    let arrayInitial = listImages;
-    let arrLengthNew = counterArrayLength(arrayNew);
-    let arrLengthInitial = counterArrayLength(arrayInitial);
     if(!imagesListStorage) {
       handleChangeConverter();
-      localStorage.setItem("images", JSON.stringify(list));
+      localStorage.setItem("images", JSON.stringify([]));
       console.log(80);
-    } else if(imagesListStorage) {
-      let arrLengthStorage = counterArrayLength(imagesStorage);
-      if(arrLengthNew === arrLengthInitial) {
-        if(arrLengthStorage === arrLengthNew) {
-          resetFormConverter();
-          console.log(81);
-        } else {
-          localStorage.setItem("images", JSON.stringify(list));
-          console.log(83);
-        }
-      }  
     }
-  }, [list]);
-
-  React.useEffect(() => {
-    const imagesListStorage = localStorage.getItem("images");
-    const imagesStorage = JSON.parse(imagesListStorage);
-    let arrayNew = list;
-    let arrayInitial = listImages;
-    let arrLengthNew = counterArrayLength(arrayNew);
-    let arrLengthInitial = counterArrayLength(arrayInitial);
-    if(arrLengthNew !== 0 && arrLengthNew === arrLengthInitial) {
-      localStorage.setItem("images", JSON.stringify(list));
-      const imagesListStorage = localStorage.getItem("images");
-      if(imagesListStorage) {
-        let arrLengthStorage = counterArrayLength(imagesStorage);
-        if(arrLengthStorage === arrLengthNew) {
-          resetFormConverter();
-          console.log(90);
-        } else {
-          localStorage.setItem("images", JSON.stringify(list));
-          console.log(93);
-        }
-      }
-    } 
-  }, [list]);
+  }, [imagesStorage]);
 
   /* Функции открытия popup редактирования и добавления книги */
   function handleAddBookPopup() {

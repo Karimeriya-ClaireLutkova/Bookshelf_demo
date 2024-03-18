@@ -22,7 +22,7 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose }) {
   const [image, setImage] = React.useState('');
   const [imageCurrent, setImageCurrent] = React.useState('');
   const { errors, isValidCurrent, handleChange, resetForm } = useFormValidator();
-  const { list, handleChangeConverter } = useImagesConverter();
+  const { handleChangeConverter } = useImagesConverter();
   const [isOpenDropdown, setOpenDropdown] = React.useState(false);
   const className = `popup popup__list-example ${isOpenDropdown? "popup_opened" : ""}`;
   const element = document.querySelector("#book-image");
@@ -35,36 +35,12 @@ export default function AddPlacePopup({ isOpen, onAddBook, onClose }) {
       setImage('');
       resetForm();
       const imagesListStorage = localStorage.getItem("images");
-      let array = list;
-      let arrLength = counterArrayLength(array);
-      if(!imagesListStorage && arrLength === 0) {
+      if(!imagesListStorage) {
         handleChangeConverter();
-        console.log(16);
-      } else if (!imagesListStorage && arrLength !== 0) {
-        localStorage.setItem("images", JSON.stringify(list));
+        localStorage.setItem("images", JSON.stringify([]));
       }
     }
-  }, [isOpen]);
-  
-  React.useEffect(() => {
-    if (isOpen) {
-      let array = list;
-      let arrLength = counterArrayLength(array);
-      if(arrLength !== 0) {
-        localStorage.setItem("images", JSON.stringify(list));
-        console.log(12);
-      }
-    }
-    
-  }, [list]);
-
-  function counterArrayLength(array) {
-    let arrLength = 0;
-    array.forEach(function() {
-      arrLength++
-    });
-    return arrLength;
-  }
+  }, [isOpen, imagesListStorage]);
 
   /* Функция проверки вводимых данных через хук */
   function handleChangeInput(evt, isImageDropdown) {

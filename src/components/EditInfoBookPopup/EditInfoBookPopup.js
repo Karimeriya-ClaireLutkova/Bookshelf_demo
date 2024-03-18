@@ -34,37 +34,13 @@ export default function EditProfilePopup({ currentBook, isOpen, onClose, onUpdat
       setAuthor(currentBook.author);
       setImage(currentBook.image);
       const imagesListStorage = localStorage.getItem("images");
-      let array = list;
-      let arrLength = counterArrayLength(array);
-      if(!imagesListStorage && arrLength === 0) {
+      if(!imagesListStorage) {
         handleChangeConverter();
         console.log(90);
-      } else if (!imagesListStorage && arrLength !== 0) {
-        localStorage.setItem("images", JSON.stringify(list));
       }
     };
-  }, [isOpen, currentBook]);
-
-  React.useEffect(() => {
-    if (isOpen) {
-      let array = list;
-      let arrLength = counterArrayLength(array);
-      if(arrLength !== 0) {
-        localStorage.setItem("images", JSON.stringify(list));
-        console.log(12);
-      }
-    }
-    
-  }, [list]);
-
-  function counterArrayLength(array) {
-    let arrLength = 0;
-    array.forEach(function() {
-      arrLength++
-    });
-    return arrLength;
-  }
-
+  }, [isOpen, currentBook, imagesListStorage]);
+  
   /* Функция проверки вводимых данных через хук */
   function handleChangeInput(evt, isImageDropdown) {
     handleChange({event: evt, placeName: isImageDropdown ? placeNameAddImageDropdown : placeEditInfoBook, currentBook});
