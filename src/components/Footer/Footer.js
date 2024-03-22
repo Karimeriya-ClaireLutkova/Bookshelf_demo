@@ -1,5 +1,5 @@
 import React from 'react';
-import { github, resume, headingFooter, year } from '../../utils/constants';
+import { github, resume, headingFooter, year, authorProject } from '../../utils/constants';
 import './Footer.css';
 
 function Footer() {
@@ -8,7 +8,7 @@ function Footer() {
     <footer className="footer">
       <h2 className="footer__title">{headingFooter}</h2>
       <div className="footer__container">
-        <p className="footer__copyright">&#169; {year}</p>
+        <p className="footer__copyright">&#169; {year} {authorProject}</p>
         <nav>
           <ul className="footer__links">
             <li>
